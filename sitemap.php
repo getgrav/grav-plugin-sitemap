@@ -90,7 +90,7 @@ class SitemapPlugin extends Plugin
     /**
      * Set needed variables to display the sitemap.
      */
-    public function onAfterSiteTwigVars()
+    public function onAfterTwigSiteVars()
     {
         if (!$this->active) {
             return;

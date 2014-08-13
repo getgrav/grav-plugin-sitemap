@@ -3,7 +3,7 @@
 `Sitemap` is a [Grav](http://github.com/getgrav/grav) Plugin that generates a [map of your pages](http://en.wikipedia.org/wiki/Site_map) in `XML` format that is easily understandable and indexable by Search engines.
 
 # Installation
-To install this plugin, just download the zip version of this repository and unzip it under `/your/site/grav/user/plugins` and rename the folder to `sitemap`.
+To install this plugin, just download the zip version of this repository and unzip it under `/your/site/grav/user/plugins`. Then, rename the folder to `sitemap`.
 
 You should now have all the plugin files under
 

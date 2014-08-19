@@ -30,7 +30,7 @@ class SitemapPlugin extends Plugin
     public function onAfterInitPlugins()
     {
         /** @var Uri $uri */
-        $uri = $this->grav['Uri'];
+        $uri = $this->grav['uri'];
         $route = $this->config->get('plugins.sitemap.route');
 
         if ($route && $route == $uri->path()) {

@@ -1,23 +1,28 @@
 <?php
 namespace Grav\Plugin;
 
-use \Grav\Common\Data;
-use \Grav\Common\Plugin;
-use \Grav\Common\Registry;
-use \Grav\Common\Uri;
-use \Grav\Common\Page\Pages;
+use Grav\Common\Data;
+use Grav\Common\Plugin;
+use Grav\Common\Uri;
+use Grav\Common\Page\Pages;
+use Grav\Component\EventDispatcher\Event;
 
 class SitemapPlugin extends Plugin
 {
     /**
-     * @var bool
-     */
-    protected $active = false;
-
-    /**
      * @var array
      */
     protected $sitemap = array();
+
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents() {
+        return [
+            'onAfterInitPlugins' => ['onAfterInitPlugins', 0],
+            'onCreateBlueprint' => ['onCreateBlueprint', 0]
+        ];
+    }
 
     /**
      * Enable sitemap only if url matches to the configuration.
@@ -25,14 +30,18 @@ class SitemapPlugin extends Plugin
     public function onAfterInitPlugins()
     {
         /** @var Uri $uri */
-        $uri = Registry::get('Uri');
+        $uri = $this->grav['Uri'];
         $route = $this->config->get('plugins.sitemap.route');
 
         if ($route && $route == $uri->path()) {
-            $this->active = true;
-
             // Turn off debugger if its on
             $this->config->set('system.debugger.enabled', false);
+
+            $this->enable([
+                'onAfterGetPages' => ['onAfterGetPages', 0],
+                'onAfterTwigTemplatesPaths' => ['onAfterTwigTemplatesPaths', 0],
+                'onAfterTwigSiteVars' => ['onAfterTwigSiteVars', 0]
+            ]);
         }
     }
 
@@ -41,14 +50,10 @@ class SitemapPlugin extends Plugin
      */
     public function onAfterGetPages()
     {
-        if (!$this->active) {
-            return;
-        }
-
         require_once __DIR__ . '/classes/sitemapentry.php';
 
         /** @var Pages $pages */
-        $pages = Registry::get('Pages');
+        $pages = $this->grav['pages'];
         $routes = $pages->routes();
         ksort($routes);
 
@@ -80,11 +85,7 @@ class SitemapPlugin extends Plugin
      */
     public function onAfterTwigTemplatesPaths()
     {
-        if (!$this->active) {
-            return;
-        }
-
-        Registry::get('Twig')->twig_paths[] = __DIR__ . '/templates';
+        $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
     }
 
     /**
@@ -92,11 +93,7 @@ class SitemapPlugin extends Plugin
      */
     public function onAfterTwigSiteVars()
     {
-        if (!$this->active) {
-            return;
-        }
-
-        $twig = Registry::get('Twig');
+        $twig = $this->grav['twig'];
         $twig->template = 'sitemap.xml.twig';
         $twig->twig_vars['sitemap'] = $this->sitemap;
     }
@@ -104,12 +101,14 @@ class SitemapPlugin extends Plugin
     /**
      * Extend page blueprints with feed configuration options.
      *
-     * @param Data\Blueprint $blueprint
+     * @param Event $event
      */
-    public function onCreateBlueprint(Data\Blueprint $blueprint)
+    public function onCreateBlueprint(Event $event)
     {
         static $inEvent = false;
 
+        /** @var Data\Blueprint $blueprint */
+        $blueprint = $event['blueprint'];
         if (!$inEvent && $blueprint->get('form.fields.tabs')) {
             $inEvent = true;
             $blueprints = new Data\Blueprints(__DIR__ . '/blueprints/');

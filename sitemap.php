@@ -19,15 +19,15 @@ class SitemapPlugin extends Plugin
      */
     public static function getSubscribedEvents() {
         return [
-            'onAfterInitPlugins' => ['onAfterInitPlugins', 0],
-            'onCreateBlueprint' => ['onCreateBlueprint', 0]
+            'onPluginsInitialized' => ['onPluginsInitialized', 0],
+            'onBlueprintCreated' => ['onBlueprintCreated', 0]
         ];
     }
 
     /**
      * Enable sitemap only if url matches to the configuration.
      */
-    public function onAfterInitPlugins()
+    public function onPluginsInitialized()
     {
         /** @var Uri $uri */
         $uri = $this->grav['uri'];
@@ -38,9 +38,9 @@ class SitemapPlugin extends Plugin
             $this->config->set('system.debugger.enabled', false);
 
             $this->enable([
-                'onAfterGetPages' => ['onAfterGetPages', 0],
-                'onAfterTwigTemplatesPaths' => ['onAfterTwigTemplatesPaths', 0],
-                'onAfterTwigSiteVars' => ['onAfterTwigSiteVars', 0]
+                'onPagesInitialized' => ['onPagesInitialized', 0],
+                'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
+                'onTwigSiteVariables' => ['onTwigSiteVariables', 0]
             ]);
         }
     }
@@ -48,7 +48,7 @@ class SitemapPlugin extends Plugin
     /**
      * Generate data for the sitemap.
      */
-    public function onAfterGetPages()
+    public function onPagesInitialized()
     {
         require_once __DIR__ . '/classes/sitemapentry.php';
 
@@ -83,7 +83,7 @@ class SitemapPlugin extends Plugin
     /**
      * Add current directory to twig lookup paths.
      */
-    public function onAfterTwigTemplatesPaths()
+    public function onTwigTemplatePaths()
     {
         $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
     }
@@ -91,7 +91,7 @@ class SitemapPlugin extends Plugin
     /**
      * Set needed variables to display the sitemap.
      */
-    public function onAfterTwigSiteVars()
+    public function onTwigSiteVariables()
     {
         $twig = $this->grav['twig'];
         $twig->template = 'sitemap.xml.twig';
@@ -103,7 +103,7 @@ class SitemapPlugin extends Plugin
      *
      * @param Event $event
      */
-    public function onCreateBlueprint(Event $event)
+    public function onBlueprintCreated(Event $event)
     {
         static $inEvent = false;
 

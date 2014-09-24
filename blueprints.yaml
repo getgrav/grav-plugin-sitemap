@@ -1,6 +1,16 @@
-name: Sitemap Plugin
-version: 1.0.0
-description: This is a simple sitemap plugin for Grav.
+name: Sitemap
+version: 1.1.0
+description: "Provide automatically generated **XML sitemaps** with this very useful, but simple to configure, Grav plugin."
+icon: map-marker
+author:
+  name: Team Grav
+  email: devs@getgrav.org
+  url: http://getgrav.org
+homepage: https://github.com/getgrav/grav-plugin-sitemap
+keywords: sitemap, plugin, xml, map, index
+bugs: https://github.com/getgrav/grav-plugin-sitemap/issues
+license: MIT
+
 validation: strict
 
 form:

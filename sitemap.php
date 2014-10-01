@@ -5,7 +5,7 @@ use Grav\Common\Data;
 use Grav\Common\Plugin;
 use Grav\Common\Uri;
 use Grav\Common\Page\Pages;
-use Grav\Component\EventDispatcher\Event;
+use RocketTheme\Toolbox\Event\Event;
 
 class SitemapPlugin extends Plugin
 {

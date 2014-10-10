@@ -11,9 +11,8 @@ keywords: sitemap, plugin, xml, map, index
 bugs: https://github.com/getgrav/grav-plugin-sitemap/issues
 license: MIT
 
-validation: strict
-
 form:
+  validation: strict
   fields:
     enabled:
       type: toggle

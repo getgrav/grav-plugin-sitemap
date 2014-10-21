@@ -39,8 +39,6 @@ class SitemapPlugin extends Plugin
         $route = $this->config->get('plugins.sitemap.route');
 
         if ($route && $route == $uri->path()) {
-            // Turn off debugger if its on
-            $this->config->set('system.debugger.enabled', false);
 
             $this->enable([
                 'onPagesInitialized' => ['onPagesInitialized', 0],

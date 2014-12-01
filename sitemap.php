@@ -42,9 +42,9 @@ class SitemapPlugin extends Plugin
         if ($route && $route == $uri->path()) {
 
             $this->enable([
+                'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
                 'onPagesInitialized' => ['onPagesInitialized', 0],
                 'onPageInitialized' => ['onPageInitialized', 0],
-                'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
                 'onTwigSiteVariables' => ['onTwigSiteVariables', 0]
             ]);
         }
@@ -55,10 +55,6 @@ class SitemapPlugin extends Plugin
      */
     public function onPagesInitialized()
     {
-        if (!$this->active) {
-            return;
-        }
-
         require_once __DIR__ . '/classes/sitemapentry.php';
 
         /** @var Pages $pages */
@@ -91,10 +87,6 @@ class SitemapPlugin extends Plugin
 
     public function onPageInitialized()
     {
-        if (!$this->active) {
-            return;
-        }
-
         // set a dummy page
         $home = $this->grav['page']->find('/');
         unset($this->grav['page']);
@@ -106,10 +98,6 @@ class SitemapPlugin extends Plugin
      */
     public function onTwigTemplatePaths()
     {
-        if (!$this->active) {
-            return;
-        }
-
         $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
     }
 
@@ -118,10 +106,6 @@ class SitemapPlugin extends Plugin
      */
     public function onTwigSiteVariables()
     {
-        if (!$this->active) {
-            return;
-        }
-
         $twig = $this->grav['twig'];
         $twig->template = 'sitemap.xml.twig';
         $twig->twig_vars['sitemap'] = $this->sitemap;
@@ -134,10 +118,6 @@ class SitemapPlugin extends Plugin
      */
     public function onBlueprintCreated(Event $event)
     {
-        if (!$this->active) {
-            return;
-        }
-
         static $inEvent = false;
 
         /** @var Data\Blueprint $blueprint */

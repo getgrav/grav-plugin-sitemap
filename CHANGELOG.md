@@ -1,5 +1,5 @@
 # v1.3.0
-## XX/XX/2015
+## 02/25/2015
 
 1. [](#new)
     * Added `ignores` list to allow certain routes to be left out of sitemap

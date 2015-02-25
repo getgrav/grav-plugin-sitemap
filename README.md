@@ -18,5 +18,11 @@ The `sitemap` plugin works out of the box. You can just go directly to `http://y
 # Config Defaults
 
 ```
-route: /sitemap
+enabled: true
+route: '/sitemap'
+ignores:
+  - /blog/blog-post-to-ignore
+  - /ingore-this-route
 ```
+
+You can ignore your own pages by providing a list of routes to ignore.

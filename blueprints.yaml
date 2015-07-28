@@ -25,20 +25,16 @@ form:
       validate:
         type: bool
 
-    built_in_css:
-      type: toggle
-      label: Use built in CSS
-      highlight: 1
-      default: 1
-      options:
-        1: Enabled
-        0: Disabled
-      validate:
-        type: bool
-
     route:
       type: text
       label: Route to sitemap
       placeholder: /sitemap
       validate:
         pattern: "/([a-z\-_]+/?)+"
+
+    ignores:
+        type: array
+        label: Ignore
+        help: "URLs to ignore"
+        placeholder_key:
+        placeholder_value: /ignore-this-route

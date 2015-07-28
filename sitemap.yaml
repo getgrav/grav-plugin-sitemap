@@ -2,4 +2,4 @@ enabled: true
 route: '/sitemap'
 ignores:
   - /blog/blog-post-to-ignore
-  - /ingore-this-route
+  - /ignore-this-route

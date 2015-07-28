@@ -36,5 +36,5 @@ form:
         type: array
         label: Ignore
         help: "URLs to ignore"
-        placeholder_key:
+        value_only: true
         placeholder_value: /ignore-this-route

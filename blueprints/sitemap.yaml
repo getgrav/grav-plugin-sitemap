@@ -2,7 +2,7 @@ form:
   fields:
     tabs:
       fields:
-        meta:
+        options:
           type: tab
 
           fields:

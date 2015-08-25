@@ -1,3 +1,11 @@
+# v1.4.0
+## 08/25/2015
+
+1. [](#improved)
+    * Added blueprints for Grav Admin plugin
+1. [](#bugfix)    
+    * Don't show unpublished pages in sitemap
+
 # v1.3.0
 ## 02/25/2015
 

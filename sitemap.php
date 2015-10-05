@@ -59,7 +59,7 @@ class SitemapPlugin extends Plugin
 
         /** @var Pages $pages */
         $pages = $this->grav['pages'];
-        $routes = $pages->routes();
+        $routes = array_unique($pages->routes());
         ksort($routes);
 
         $ignores = (array) $this->config->get('plugins.sitemap.ignores');

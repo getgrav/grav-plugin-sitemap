@@ -1,3 +1,9 @@
+# v1.4.2
+## 11/11/2015
+
+1. [](#bugfix)
+    * Escape the `loc` so it's properly parsed
+
 # v1.4.1
 ## 10/07/2015
 

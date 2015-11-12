@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     {% for entry in sitemap %}
     <url>
-        <loc>{{ entry.location }}</loc>
+        <loc>{{ entry.location|e }}</loc>
         <lastmod>{{ entry.lastmod }}</lastmod>
         {% if entry.changefreq %}
         <changefreq>{{ entry.changefreq }}</changefreq>

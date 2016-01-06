@@ -40,3 +40,9 @@ ignores:
 ```
 
 You can ignore your own pages by providing a list of routes to ignore.
+
+## Only allow access to the .xml file
+
+If you want your sitemap to only be accessible via `sitemap.xml` for example, set the route to `/sitemap` and add this to your `.htaccess` file:
+
+`Redirect 301 /sitemap /sitemap.xml`

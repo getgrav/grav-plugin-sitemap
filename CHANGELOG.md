@@ -1,3 +1,13 @@
+# v1.5.0
+## 01/06/2016
+
+1. [](#new)
+    * Added a default XSL file for the sitemap
+1. [](#improved)
+    * Added a note to the README on how to only allow the link to the .xml sitemap
+1. [](#bugfix)
+    * Fixed saving the `priority` option when adding it to a page through the Admin Plugin
+
 # v1.4.2
 ## 11/11/2015
 

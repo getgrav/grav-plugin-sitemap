@@ -1,3 +1,11 @@
+# v1.6.0
+## 04/29/2016
+
+1. [](#new)
+    * Added compatibility with Grav Admin 1.1
+1. [](#improved)
+    * Use some common translated strings in the blueprint
+
 # v1.5.0
 ## 01/06/2016
 

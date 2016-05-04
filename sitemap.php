@@ -67,7 +67,7 @@ class SitemapPlugin extends Plugin
         foreach ($routes as $route => $path) {
             $page = $pages->get($path);
 
-            if ($page->published() && $page->routable() && !in_array($page->route(), $ignores)) {
+            if ($page->published() && $page->routable() && !preg_match("/(" . str_replace('/', '\\/', implode('|', $ignores)) .")/i", $page->route())) {
                 $entry = new SitemapEntry();
                 $entry->location = $page->permaLink();
                 $entry->lastmod = date('Y-m-d', $page->modified());

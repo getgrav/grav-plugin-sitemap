@@ -1,3 +1,9 @@
+# v1.6.1
+## 05/30/2016
+
+1. [](#bugfix)
+    * Priority should be `float` in blueprints
+
 # v1.6.0
 ## 04/29/2016
 

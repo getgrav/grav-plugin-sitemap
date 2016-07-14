@@ -1,3 +1,9 @@
+# v1.6.2
+## 07/14/2016
+
+1. [](#bugfix)
+    * Fix sitemap XLS in multilanguage
+
 # v1.6.1
 ## 05/30/2016
 

@@ -2,6 +2,7 @@
 namespace Grav\Plugin;
 
 use Grav\Common\Data;
+use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
 use Grav\Common\Uri;
 use Grav\Common\Page\Pages;
@@ -89,9 +90,11 @@ class SitemapPlugin extends Plugin
     public function onPageInitialized()
     {
         // set a dummy page
-        $home = $this->grav['page']->find('/');
+        $page = new Page;
+        $page->init(new \SplFileInfo(__DIR__ . '/pages/sitemap.md'));
+
         unset($this->grav['page']);
-        $this->grav['page'] = $home;
+        $this->grav['page'] = $page;
     }
 
     /**

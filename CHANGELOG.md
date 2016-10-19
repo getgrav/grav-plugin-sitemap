@@ -1,5 +1,5 @@
 # v1.7.0
-## xx/xx/2016
+## 10/19/2016
 
 1. [](#new)
     * Use new Grav feature to force output to be XML even when not passed `.xml` in URL

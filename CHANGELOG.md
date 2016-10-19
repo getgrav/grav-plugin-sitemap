@@ -1,3 +1,9 @@
+# v1.7.0
+## 10/19/2016
+
+1. [](#new)
+    * Use new Grav feature to force output to be XML even when not passed `.xml` in URL
+
 # v1.6.2
 ## 07/14/2016
 

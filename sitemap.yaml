@@ -1,6 +1,6 @@
 enabled: true
 route: '/sitemap'
-changefreq: Weekly
+changefreq: Daily
 priority: !!float 1
 ignores:
   - /blog/blog-post-to-ignore

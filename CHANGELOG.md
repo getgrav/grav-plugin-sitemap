@@ -1,3 +1,11 @@
+# v1.8.0
+## 03/14/2017
+
+1. [](#new)
+    * Added `changefreq` and `priority` [#28](https://github.com/getgrav/grav-plugin-sitemap/pull/28)
+1. [](#improved)
+    * Use `$page->canonical()` rather than `$page->permalink()` [#28](https://github.com/getgrav/grav-plugin-sitemap/pull/28)
+
 # v1.7.0
 ## 10/19/2016
 

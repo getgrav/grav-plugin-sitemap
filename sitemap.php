@@ -70,17 +70,13 @@ class SitemapPlugin extends Plugin
 
             if ($page->published() && $page->routable() && !in_array($page->route(), $ignores)) {
                 $entry = new SitemapEntry();
-                $entry->location = $page->permaLink();
+                $entry->location = $page->canonical();
                 $entry->lastmod = date('Y-m-d', $page->modified());
 
                 // optional changefreq & priority that you can set in the page header
                 $header = $page->header();
-                if (isset($header->sitemap['changefreq'])) {
-                    $entry->changefreq = $header->sitemap['changefreq'];
-                }
-                if (isset($header->sitemap['priority'])) {
-                    $entry->priority = $header->sitemap['priority'];
-                }
+                $entry->changefreq = (isset($header->sitemap['changefreq'])) ? $header->sitemap['changefreq'] : $this->config->get('plugins.sitemap.changefreq');
+                $entry->priority = (isset($header->sitemap['priority'])) ? $header->sitemap['priority'] : $this->config->get('plugins.sitemap.priority');
 
                 $this->sitemap[$route] = $entry;
             }

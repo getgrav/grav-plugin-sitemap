@@ -70,7 +70,7 @@ class SitemapPlugin extends Plugin
 
             if ($page->published() && $page->routable() && !in_array($page->route(), $ignores)) {
                 $entry = new SitemapEntry();
-                $entry->location = $page->link(true);
+                $entry->location = $page->canonical();
                 $entry->lastmod = date('Y-m-d', $page->modified());
 
                 // optional changefreq & priority that you can set in the page header

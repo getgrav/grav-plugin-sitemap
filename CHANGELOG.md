@@ -1,5 +1,5 @@
 # v1.8.0
-## 10/19/2016
+## 03/14/2017
 
 1. [](#new)
     * Added `changefreq` and `priority` [#28](https://github.com/getgrav/grav-plugin-sitemap/pull/28)

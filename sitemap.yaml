@@ -5,6 +5,8 @@ priority: !!float 1
 ignores:
   - /blog/blog-post-to-ignore
   - /ignore-this-route
+  - /ignore-children-of-this-route/.*
+
 additions:
   -
     location: /not-a-grav-url

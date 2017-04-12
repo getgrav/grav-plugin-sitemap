@@ -37,6 +37,7 @@ route: '/sitemap'
 ignores:
   - /blog/blog-post-to-ignore
   - /ignore-this-route
+  - /ignore-children-of-this-route/.*
 ```
 
 You can ignore your own pages by providing a list of routes to ignore.

@@ -3,6 +3,7 @@
 
 1. [](#new)
     * Added wildcard ignores [#34](https://github.com/getgrav/grav-plugin-sitemap/pull/34)
+    * Added ability to add external URLs to sitemap [#35](https://github.com/getgrav/grav-plugin-sitemap/pull/35)
 
 # v1.8.0
 ## 03/14/2017

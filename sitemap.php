@@ -78,6 +78,19 @@ class SitemapPlugin extends Plugin
                 $entry->changefreq = (isset($header->sitemap['changefreq'])) ? $header->sitemap['changefreq'] : $this->config->get('plugins.sitemap.changefreq');
                 $entry->priority = (isset($header->sitemap['priority'])) ? $header->sitemap['priority'] : $this->config->get('plugins.sitemap.priority');
 
+                if (count($this->config->get('system.languages.supported', [])) > 0) {
+                    $entry->translated = $page->translatedLanguages();
+
+                    foreach($entry->translated as $lang => $page_route) {
+                        $page_route = $page->rawRoute();
+                        if ($page->home()) {
+                            $page_route = '/';
+                        }
+
+                        $entry->translated[$lang] = $page_route;
+                    }
+                }
+
                 $this->sitemap[$route] = $entry;
             }
         }

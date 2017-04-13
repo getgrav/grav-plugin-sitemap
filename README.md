@@ -40,7 +40,12 @@ ignores:
   - /ignore-children-of-this-route/.*
 ```
 
-You can ignore your own pages by providing a list of routes to ignore.
+You can ignore your own pages by providing a list of routes to ignore. You can also use a page's Frontmatter to signal that the sitemap should ignore it:
+
+```
+sitemap:
+    ignore: true
+```
 
 ## Only allow access to the .xml file
 

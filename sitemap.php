@@ -81,6 +81,17 @@ class SitemapPlugin extends Plugin
                 $this->sitemap[$route] = $entry;
             }
         }
+
+        $rootUrl = $this->grav['uri']->rootUrl(true) . $pages->base();
+        $additions = (array) $this->config->get('plugins.sitemap.additions');
+
+        foreach ($additions as $addition) {
+            $entry = new SitemapEntry();
+            $entry->location = $rootUrl . $addition['location'];
+            $entry->lastmod = $addition['lastmod'];
+
+            $this->sitemap[] = $entry;
+        }
     }
 
     public function onPageInitialized()

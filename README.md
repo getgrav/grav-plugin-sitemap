@@ -4,7 +4,7 @@
 
 # Installation
 
-Installing the Sitemap plugin can be done in one of two ways. Our GPM (Grav Package Manager) installation method enables you to quickly and easily install the plugin with a simple terminal command, while the manual method enables you to do so via a zip file. 
+Installing the Sitemap plugin can be done in one of two ways. Our GPM (Grav Package Manager) installation method enables you to quickly and easily install the plugin with a simple terminal command, while the manual method enables you to do so via a zip file.
 
 ## GPM Installation (Preferred)
 
@@ -29,7 +29,7 @@ You should now have all the plugin files under
 
 The `sitemap` plugin works out of the box. You can just go directly to `http://yoursite.com/sitemap` and you will see the generated `XML`.
 
-# Config Defaults
+## Config Defaults
 
 ```
 enabled: true
@@ -52,3 +52,15 @@ sitemap:
 If you want your sitemap to only be accessible via `sitemap.xml` for example, set the route to `/sitemap` and add this to your `.htaccess` file:
 
 `Redirect 301 /sitemap /sitemap.xml`
+
+
+## Manually add pages to the sitemap
+
+You can manually add URLs to the sitemap using the Admin settings, or by adding entries to your `sitemap.yaml` with this format:
+
+```
+additions:
+  -
+    location: /not-a-grav-url
+    lastmod: '2017-04-06'
+```

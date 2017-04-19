@@ -41,3 +41,18 @@ form:
         help: "URLs to ignore"
         value_only: true
         placeholder_value: /ignore-this-route
+
+    additions:
+        type: list
+        label: Additional URLs
+        help: "Add external URLs to the sitemap"
+
+        fields:
+          .location:
+            type: text
+            label: The URL location
+            placeholder: "/not-a-grav-url"
+          .lastmod:
+            type: text
+            label: "Last modification e.g. 2017-04-06"
+            placeholder: "2017-04-06"

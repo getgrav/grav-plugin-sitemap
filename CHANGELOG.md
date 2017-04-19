@@ -1,5 +1,5 @@
 # v1.9.0
-## 04/xx/2017
+## 04/19/2017
 
 1. [](#new)
     * Added wildcard ignores [#34](https://github.com/getgrav/grav-plugin-sitemap/pull/34)

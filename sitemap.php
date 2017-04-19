@@ -67,19 +67,44 @@ class SitemapPlugin extends Plugin
 
         foreach ($routes as $route => $path) {
             $page = $pages->get($path);
+            $header = $page->header();
+            $page_ignored = isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false;
 
-            if ($page->published() && $page->routable() && !in_array($page->route(), $ignores)) {
+            if ($page->published() && $page->routable() && !preg_match(sprintf("@^(%s)$@i", implode('|', $ignores)), $page->route()) && !$page_ignored) {
                 $entry = new SitemapEntry();
                 $entry->location = $page->canonical();
                 $entry->lastmod = date('Y-m-d', $page->modified());
 
                 // optional changefreq & priority that you can set in the page header
-                $header = $page->header();
                 $entry->changefreq = (isset($header->sitemap['changefreq'])) ? $header->sitemap['changefreq'] : $this->config->get('plugins.sitemap.changefreq');
                 $entry->priority = (isset($header->sitemap['priority'])) ? $header->sitemap['priority'] : $this->config->get('plugins.sitemap.priority');
 
+                if (count($this->config->get('system.languages.supported', [])) > 0) {
+                    $entry->translated = $page->translatedLanguages();
+
+                    foreach($entry->translated as $lang => $page_route) {
+                        $page_route = $page->rawRoute();
+                        if ($page->home()) {
+                            $page_route = '/';
+                        }
+
+                        $entry->translated[$lang] = $page_route;
+                    }
+                }
+
                 $this->sitemap[$route] = $entry;
             }
+        }
+
+        $rootUrl = $this->grav['uri']->rootUrl(true) . $pages->base();
+        $additions = (array) $this->config->get('plugins.sitemap.additions');
+
+        foreach ($additions as $addition) {
+            $entry = new SitemapEntry();
+            $entry->location = $rootUrl . $addition['location'];
+            $entry->lastmod = $addition['lastmod'];
+
+            $this->sitemap[] = $entry;
         }
     }
 

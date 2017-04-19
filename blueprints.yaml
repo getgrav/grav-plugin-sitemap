@@ -1,5 +1,5 @@
 name: Sitemap
-version: 1.8.0
+version: 1.9.0
 description: "Provide automatically generated **XML sitemaps** with this very useful, but simple to configure, Grav plugin."
 icon: map-marker
 author:
@@ -41,3 +41,18 @@ form:
         help: "URLs to ignore"
         value_only: true
         placeholder_value: /ignore-this-route
+
+    additions:
+        type: list
+        label: Additional URLs
+        help: "Add external URLs to the sitemap"
+
+        fields:
+          .location:
+            type: text
+            label: The URL location
+            placeholder: "/not-a-grav-url"
+          .lastmod:
+            type: text
+            label: "Last modification e.g. 2017-04-06"
+            placeholder: "2017-04-06"

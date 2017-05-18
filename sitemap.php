@@ -80,7 +80,7 @@ class SitemapPlugin extends Plugin
                 $entry->priority = (isset($header->sitemap['priority'])) ? $header->sitemap['priority'] : $this->config->get('plugins.sitemap.priority');
 
                 if (count($this->config->get('system.languages.supported', [])) > 0) {
-                    $entry->translated = $page->translatedLanguages();
+                    $entry->translated = $page->translatedLanguages(true);
 
                     foreach($entry->translated as $lang => $page_route) {
                         $page_route = $page->rawRoute();

@@ -1,3 +1,9 @@
+# v1.9.2
+## 05/xx/2017
+
+1. [](#bugfix)
+    * Only add published translations to the sitemap (with Grav 1.3.0) [#43](https://github.com/getgrav/grav-plugin-sitemap/issues/43)
+
 # v1.9.1
 ## 04/21/2017
 

@@ -27,6 +27,39 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+  
+    changefreq:
+      type: select
+      label: Global - sitemap change frequency
+      default: ''
+      options:
+        '': Use Global (daily)
+        always: Always
+        hourly: Hourly
+        daily: Daily
+        weekly: Weekly
+        monthly: Monthly
+        yearly: Yearly
+        never:  Never
+        
+    priority:
+      type: select
+      label: Global - sitemap priority
+      default: ''
+      options:
+        '': Use Global (1)
+        '0.1': 0.1
+        '0.2': 0.2
+        '0.3': 0.3
+        '0.4': 0.4
+        '0.5': 0.5
+        '0.6': 0.6
+        '0.7': 0.7
+        '0.8': 0.8
+        '0.9': 0.9
+        '1.0': 1.0
+      validate:
+        type: float
 
     route:
       type: text

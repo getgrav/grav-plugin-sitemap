@@ -6,6 +6,7 @@
  <xsl:template match="/">
   <html>
       <head>
+        <meta name="robots" content="noindex" />
         <title>
           XML Sitemap
         </title>

@@ -1,6 +1,7 @@
 <?php
 namespace Grav\Plugin;
 
+use Grav\Common\Grav;
 use Grav\Common\Data;
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
@@ -58,6 +59,10 @@ class SitemapPlugin extends Plugin
     {
         require_once __DIR__ . '/classes/sitemapentry.php';
 
+        // get grav instance and current language
+        $grav = Grav::instance();
+        $current_lang = $grav['language']->getLanguage();
+
         /** @var Pages $pages */
         $pages = $this->grav['pages'];
         $routes = array_unique($pages->routes());
@@ -69,8 +74,10 @@ class SitemapPlugin extends Plugin
             $page = $pages->get($path);
             $header = $page->header();
             $page_ignored = isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false;
+            $page_languages = $page->translatedLanguages();
+            $lang_available = (empty($page_languages) || array_key_exists($current_lang, $page_languages));
 
-            if ($page->published() && $page->routable() && !preg_match(sprintf("@^(%s)$@i", implode('|', $ignores)), $page->route()) && !$page_ignored) {
+            if ($page->published() && $page->routable() && !preg_match(sprintf("@^(%s)$@i", implode('|', $ignores)), $page->route()) && !$page_ignored && $lang_available ) {
                 $entry = new SitemapEntry();
                 $entry->location = $page->canonical();
                 $entry->lastmod = date('Y-m-d', $page->modified());

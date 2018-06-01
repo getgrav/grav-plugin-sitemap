@@ -85,7 +85,7 @@ class SitemapPlugin extends Plugin
                     foreach($entry->translated as $lang => $page_route) {
                         $page_route = $page->rawRoute();
                         if ($page->home()) {
-                            $page_route = '/';
+                            $page_route = '';
                         }
 
                         $entry->translated[$lang] = $page_route;

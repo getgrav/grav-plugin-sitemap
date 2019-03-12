@@ -148,11 +148,13 @@ class SitemapPlugin extends Plugin
         /** @var Data\Blueprint $blueprint */
         $blueprint = $event['blueprint'];
         if (!$inEvent && $blueprint->get('form/fields/tabs', null, '/')) {
-            $inEvent = true;
-            $blueprints = new Data\Blueprints(__DIR__ . '/blueprints/');
-            $extends = $blueprints->get('sitemap');
-            $blueprint->extend($extends, true);
-            $inEvent = false;
+            if (!in_array($blueprint->getFilename(), array_keys($this->grav['pages']->modularTypes()))) {
+                $inEvent = true;
+                $blueprints = new Data\Blueprints(__DIR__ . '/blueprints/');
+                $extends = $blueprints->get('sitemap');
+                $blueprint->extend($extends, true);
+                $inEvent = false;
+            }
         }
     }
 }

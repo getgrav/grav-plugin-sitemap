@@ -1,0 +1,29 @@
+en:
+  PLUGIN_SITEMAP:
+    ROUTE: 'Route to sitemap'
+    IGNORES: 'Ignore'
+    IGNORES_HELP: 'URLs to ignore'
+    ADDITIONS: 'Additional URLs'
+    ADDITIONS_HELP: 'Add external URLs to the sitemap'
+    LOCATION: 'The URL location'
+    LASTMOD: 'Last modification e.g. 2017-04-06'
+
+ru:
+  PLUGIN_SITEMAP:
+    ROUTE: 'Маршрут к карте сайта'
+    IGNORES: 'Игнорировать'
+    IGNORES_HELP: 'URL-адреса для игнорирования'
+    ADDITIONS: 'Дополнительные URL'
+    ADDITIONS_HELP: 'Добавить внешние URL в карту сайта'
+    LOCATION: 'Расположение URL'
+    LASTMOD: 'Последнее изменение, например 2017-04-06'
+
+uk:
+  PLUGIN_SITEMAP:
+    ROUTE: 'Маршрут до карти сайту'
+    IGNORES: 'Ігнорувати'
+    IGNORES_HELP: 'URL-адреси для ігнорування'
+    ADDITIONS: 'Додаткові URL-адреси'
+    ADDITIONS_HELP: 'Додати зовнішні URL-адреси до карти сайту'
+    LOCATION: 'Розташування URL-адреси'
+    LASTMOD: 'Остання модифікація, напр. 2017-04-06'

@@ -1,5 +1,8 @@
 en:
   PLUGIN_SITEMAP:
+    SITEMAP: 'Sitemap'
+    HEADER_CHANGEFREQ: 'Sitemap change frequency'
+    HEADER_PRIORITY: 'Sitemap priority'
     CHANGEFREQ: 'Global - sitemap change frequency'
     CHANGEFREQ_DEFAULT: 'Use Global (daily)'
     CHANGEFREQ_ALWAYS: 'Always'
@@ -21,6 +24,9 @@ en:
 
 ru:
   PLUGIN_SITEMAP:
+    SITEMAP: 'Карта сайта'
+    HEADER_CHANGEFREQ: 'Частота обновления карты сайта'
+    HEADER_PRIORITY: 'Приоритет карты сайта'
     CHANGEFREQ: 'Глобальное - частота обновления карты сайта'
     CHANGEFREQ_DEFAULT: 'Использовать глобальное (ежедневно)'
     CHANGEFREQ_ALWAYS: 'Всегда'
@@ -42,6 +48,9 @@ ru:
 
 uk:
   PLUGIN_SITEMAP:
+    SITEMAP: 'Карта сайту'
+    HEADER_CHANGEFREQ: 'Частота оновлення карти сайту'
+    HEADER_PRIORITY: 'Пріоритет карти сайту'
     CHANGEFREQ: 'Глобальне - частота оновлення карти сайту'
     CHANGEFREQ_DEFAULT: 'Використовувати глобальне (щодня)'
     CHANGEFREQ_ALWAYS: 'Завжди'

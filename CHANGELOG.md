@@ -1,3 +1,14 @@
+# v1.9.2
+## 05/09/2019
+
+1. [](#improved)
+    * Enhanced HTML layout with XSL transformation [#24](https://github.com/getgrav/grav-plugin-sitemap/pull/24)
+    * Global toggles for change frequency and priority [#52](https://github.com/getgrav/grav-plugin-sitemap/pull/52)
+    * Added a meta name="robots" content="noindex" into the header for seo [#50](https://github.com/getgrav/grav-plugin-sitemap/pull/50)
+    * Added `ru` and `uk` translations [#61](https://github.com/getgrav/grav-plugin-sitemap/pull/61)
+1. [](#bugfix)
+    * Only add published translations to the sitemap [#43](https://github.com/getgrav/grav-plugin-sitemap/issues/43)
+
 # v1.9.1
 ## 04/21/2017
 

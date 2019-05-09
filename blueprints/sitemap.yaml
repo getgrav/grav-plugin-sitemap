@@ -9,30 +9,30 @@ form:
 
             sitemap:
               type: section
-              title: Sitemap
+              title: PLUGIN_SITEMAP.SITEMAP
               underline: true
 
               fields:
                 header.sitemap.changefreq:
                   type: select
-                  label: Sitemap change frequency
+                  label: PLUGIN_SITEMAP.HEADER_CHANGEFREQ
                   default: ''
                   options:
-                    '': Use Global
-                    always: Always
-                    hourly: Hourly
-                    daily: Daily
-                    weekly: Weekly
-                    monthly: Monthly
-                    yearly: Yearly
-                    never:  Never
+                    '': PLUGIN_SITEMAP.CHANGEFREQ_DEFAULT
+                    always: PLUGIN_SITEMAP.CHANGEFREQ_ALWAYS
+                    hourly: PLUGIN_SITEMAP.CHANGEFREQ_HOURLY
+                    daily: PLUGIN_SITEMAP.CHANGEFREQ_DAILY
+                    weekly: PLUGIN_SITEMAP.CHANGEFREQ_WEEKLY
+                    monthly: PLUGIN_SITEMAP.CHANGEFREQ_MONTHLY
+                    yearly: PLUGIN_SITEMAP.CHANGEFREQ_YEARLY
+                    never:  PLUGIN_SITEMAP.CHANGEFREQ_NEVER
 
                 header.sitemap.priority:
                   type: select
-                  label: Sitemap Priority
+                  label: PLUGIN_SITEMAP.HEADER_PRIORITY
                   default: ''
                   options:
-                    '': Use Global
+                    '': PLUGIN_SITEMAP.PRIORITY_USE_GLOBAL
                     '0.1': 0.1
                     '0.2': 0.2
                     '0.3': 0.3

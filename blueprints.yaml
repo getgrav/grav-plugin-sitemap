@@ -1,5 +1,5 @@
 name: Sitemap
-version: 1.9.1
+version: 1.9.2
 description: "Provide automatically generated **XML sitemaps** with this very useful, but simple to configure, Grav plugin."
 icon: map-marker
 author:
@@ -27,32 +27,65 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+  
+    changefreq:
+      type: select
+      label: PLUGIN_SITEMAP.CHANGEFREQ
+      default: ''
+      options:
+        '': PLUGIN_SITEMAP.CHANGEFREQ_DEFAULT
+        always: PLUGIN_SITEMAP.CHANGEFREQ_ALWAYS
+        hourly: PLUGIN_SITEMAP.CHANGEFREQ_HOURLY
+        daily: PLUGIN_SITEMAP.CHANGEFREQ_DAILY
+        weekly: PLUGIN_SITEMAP.CHANGEFREQ_WEEKLY
+        monthly: PLUGIN_SITEMAP.CHANGEFREQ_MONTHLY
+        yearly: PLUGIN_SITEMAP.CHANGEFREQ_YEARLY
+        never:  PLUGIN_SITEMAP.CHANGEFREQ_NEVER
+        
+    priority:
+      type: select
+      label: PLUGIN_SITEMAP.PRIORITY
+      default: ''
+      options:
+        '': PLUGIN_SITEMAP.PRIORITY_USE_GLOBAL
+        '0.1': 0.1
+        '0.2': 0.2
+        '0.3': 0.3
+        '0.4': 0.4
+        '0.5': 0.5
+        '0.6': 0.6
+        '0.7': 0.7
+        '0.8': 0.8
+        '0.9': 0.9
+        '1.0': 1.0
+      validate:
+        type: float
 
     route:
       type: text
-      label: Route to sitemap
+      label: PLUGIN_SITEMAP.ROUTE
       placeholder: /sitemap
       validate:
         pattern: "/([a-z\-_]+/?)+"
 
     ignores:
         type: array
-        label: Ignore
-        help: "URLs to ignore"
+        label: PLUGIN_SITEMAP.IGNORES
+        help: PLUGIN_SITEMAP.IGNORES_HELP
         value_only: true
         placeholder_value: /ignore-this-route
 
     additions:
         type: list
-        label: Additional URLs
-        help: "Add external URLs to the sitemap"
+        label: PLUGIN_SITEMAP.ADDITIONS
+        help: PLUGIN_SITEMAP.ADDITIONS_HELP
 
         fields:
           .location:
             type: text
-            label: The URL location
+            label: PLUGIN_SITEMAP.LOCATION
             placeholder: "/not-a-grav-url"
           .lastmod:
             type: text
-            label: "Last modification e.g. 2017-04-06"
+            label: PLUGIN_SITEMAP.LASTMOD
             placeholder: "2017-04-06"

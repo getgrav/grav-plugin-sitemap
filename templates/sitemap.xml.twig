@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="{{ uri.rootUrl }}/user/plugins/sitemap/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 {% for entry in sitemap %}
   <url>
-    <loc>{{ entry.location|e }}</loc>
-{% if entry.translated %}
-{% for language, page_route in entry.translated %}
-    <xhtml:link rel="alternate" hreflang="{{ language }}" href="{{uri.rootUrl(true)}}{{grav.language.getLanguageURLPrefix(language)}}{{ page_route }}" />
+    <loc>{{ entry.url|e }}</loc>
+{% for translatedEntry in entry.translations %}
+    <xhtml:link rel="alternate" hreflang="{{ translatedEntry.language }}" href="{{ translatedEntry.url }}" />
 {% endfor %}
-{% endif %}
     <lastmod>{{ entry.lastmod }}</lastmod>
 {% if entry.changefreq %}
     <changefreq>{{ entry.changefreq }}</changefreq>

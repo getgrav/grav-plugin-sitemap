@@ -1,3 +1,11 @@
+# v2.0.0
+## 20/06/2019
+
+- Remove XSL template.
+- Add a debug view that shows the sitemap's XML source and Grav's debugtoolbar.
+- Use correct URLs for translated pages.
+
+
 # v1.9.2
 ## 05/09/2019
 

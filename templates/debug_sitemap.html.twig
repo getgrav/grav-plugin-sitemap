@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Debug</title>
+  {{ assets.css()|raw }}
+  {{ assets.js()|raw }}
+</head>
+<body>
+
+<pre>
+{% filter escape %}
+{% include 'sitemap.xml.twig' %}
+{% endfilter %}
+</pre>
+
+{% block bottom %}
+    {{ assets.js('bottom') }}
+{% endblock %}
+
+</body>
+</html>

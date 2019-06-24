@@ -1,5 +1,5 @@
 name: Sitemap
-version: 1.9.2
+version: 2.0.0
 description: "Provide automatically generated **XML sitemaps** with this very useful, but simple to configure, Grav plugin."
 icon: map-marker
 author:
@@ -12,7 +12,7 @@ bugs: https://github.com/getgrav/grav-plugin-sitemap/issues
 license: MIT
 
 dependencies:
-    - { name: grav, version: '>=1.1.6' }
+    - { name: grav, version: '>=1.6.9' }
 
 form:
   validation: strict
@@ -27,7 +27,7 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
-  
+
     changefreq:
       type: select
       label: PLUGIN_SITEMAP.CHANGEFREQ
@@ -41,7 +41,7 @@ form:
         monthly: PLUGIN_SITEMAP.CHANGEFREQ_MONTHLY
         yearly: PLUGIN_SITEMAP.CHANGEFREQ_YEARLY
         never:  PLUGIN_SITEMAP.CHANGEFREQ_NEVER
-        
+
     priority:
       type: select
       label: PLUGIN_SITEMAP.PRIORITY

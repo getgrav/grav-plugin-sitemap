@@ -1,6 +1,7 @@
 <?php
 namespace Grav\Plugin;
 
+use Grav\Common\Grav;
 use Grav\Common\Data;
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
@@ -58,6 +59,10 @@ class SitemapPlugin extends Plugin
     {
         require_once __DIR__ . '/classes/sitemapentry.php';
 
+        // get grav instance and current language
+        $grav = Grav::instance();
+        $current_lang = $grav['language']->getLanguage();
+
         /** @var Pages $pages */
         $pages = $this->grav['pages'];
         $routes = array_unique($pages->routes());
@@ -69,8 +74,10 @@ class SitemapPlugin extends Plugin
             $page = $pages->get($path);
             $header = $page->header();
             $page_ignored = isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false;
+            $page_languages = $page->translatedLanguages();
+            $lang_available = (empty($page_languages) || array_key_exists($current_lang, $page_languages));
 
-            if ($page->published() && $page->routable() && !preg_match(sprintf("@^(%s)$@i", implode('|', $ignores)), $page->route()) && !$page_ignored) {
+            if ($page->published() && $page->routable() && !preg_match(sprintf("@^(%s)$@i", implode('|', $ignores)), $page->route()) && !$page_ignored && $lang_available ) {
                 $entry = new SitemapEntry();
                 $entry->location = $page->canonical();
                 $entry->lastmod = date('Y-m-d', $page->modified());
@@ -85,7 +92,7 @@ class SitemapPlugin extends Plugin
                     foreach($entry->translated as $lang => $page_route) {
                         $page_route = $page->rawRoute();
                         if ($page->home()) {
-                            $page_route = '/';
+                            $page_route = '';
                         }
 
                         $entry->translated[$lang] = $page_route;
@@ -108,14 +115,20 @@ class SitemapPlugin extends Plugin
         }
     }
 
-    public function onPageInitialized()
+    public function onPageInitialized($event)
     {
-        // set a dummy page
-        $page = new Page;
-        $page->init(new \SplFileInfo(__DIR__ . '/pages/sitemap.md'));
+        $page = $event['page'] ?? null;
 
-        unset($this->grav['page']);
-        $this->grav['page'] = $page;
+        if (is_null($page)) {
+            // set a dummy page
+            $page = new Page;
+            $page->init(new \SplFileInfo(__DIR__ . '/pages/sitemap.md'));
+            unset($this->grav['page']);
+            $this->grav['page'] = $page;
+
+            $twig = $this->grav['twig'];
+            $twig->template = 'sitemap.xml.twig';
+        }
     }
 
     /**
@@ -132,7 +145,6 @@ class SitemapPlugin extends Plugin
     public function onTwigSiteVariables()
     {
         $twig = $this->grav['twig'];
-        $twig->template = 'sitemap.xml.twig';
         $twig->twig_vars['sitemap'] = $this->sitemap;
     }
 
@@ -148,11 +160,13 @@ class SitemapPlugin extends Plugin
         /** @var Data\Blueprint $blueprint */
         $blueprint = $event['blueprint'];
         if (!$inEvent && $blueprint->get('form/fields/tabs', null, '/')) {
-            $inEvent = true;
-            $blueprints = new Data\Blueprints(__DIR__ . '/blueprints/');
-            $extends = $blueprints->get('sitemap');
-            $blueprint->extend($extends, true);
-            $inEvent = false;
+            if (!in_array($blueprint->getFilename(), array_keys($this->grav['pages']->modularTypes()))) {
+                $inEvent = true;
+                $blueprints = new Data\Blueprints(__DIR__ . '/blueprints/');
+                $extends = $blueprints->get('sitemap');
+                $blueprint->extend($extends, true);
+                $inEvent = false;
+            }
         }
     }
 }

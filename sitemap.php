@@ -115,14 +115,20 @@ class SitemapPlugin extends Plugin
         }
     }
 
-    public function onPageInitialized()
+    public function onPageInitialized($event)
     {
-        // set a dummy page
-        $page = new Page;
-        $page->init(new \SplFileInfo(__DIR__ . '/pages/sitemap.md'));
+        $page = $event['page'] ?? null;
 
-        unset($this->grav['page']);
-        $this->grav['page'] = $page;
+        if (is_null($page)) {
+            // set a dummy page
+            $page = new Page;
+            $page->init(new \SplFileInfo(__DIR__ . '/pages/sitemap.md'));
+            unset($this->grav['page']);
+            $this->grav['page'] = $page;
+
+            $twig = $this->grav['twig'];
+            $twig->template = 'sitemap.xml.twig';
+        }
     }
 
     /**
@@ -139,7 +145,6 @@ class SitemapPlugin extends Plugin
     public function onTwigSiteVariables()
     {
         $twig = $this->grav['twig'];
-        $twig->template = 'sitemap.xml.twig';
         $twig->twig_vars['sitemap'] = $this->sitemap;
     }
 

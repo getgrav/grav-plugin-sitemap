@@ -120,7 +120,7 @@ class SitemapPlugin extends Plugin
         $page = $event['page'] ?? null;
         $route = $this->config->get('plugins.sitemap.route');
 
-        if ($page->route() !== $route) {
+        if (is_null($page) || $page->route() !== $route) {
             // set a dummy page
             $page = new Page;
             $page->init(new \SplFileInfo(__DIR__ . '/pages/sitemap.md'));

@@ -118,8 +118,9 @@ class SitemapPlugin extends Plugin
     public function onPageInitialized($event)
     {
         $page = $event['page'] ?? null;
+        $route = $this->config->get('plugins.sitemap.route');
 
-        if (is_null($page)) {
+        if (is_null($page) || $page->route() !== $route) {
             // set a dummy page
             $page = new Page;
             $page->init(new \SplFileInfo(__DIR__ . '/pages/sitemap.md'));

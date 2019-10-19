@@ -1,3 +1,9 @@
+# v1.9.4
+## 10/19/2019
+
+1. [](#bugfix)
+    * Fixed a regression issue that caused sitemap not to work 'unless' you had an existing `sitemap` page [#65](https://github.com/getgrav/grav-plugin-sitemap/issues/65)
+
 # v1.9.3
 ## 10/18/2019
 

@@ -1,6 +1,7 @@
 en:
   PLUGIN_SITEMAP:
     SITEMAP: 'Sitemap'
+    HEADER_IGNORE: 'Sitemap ignore page'
     HEADER_CHANGEFREQ: 'Sitemap change frequency'
     HEADER_PRIORITY: 'Sitemap priority'
     CHANGEFREQ: 'Global - sitemap change frequency'

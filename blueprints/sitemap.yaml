@@ -13,6 +13,18 @@ form:
               underline: true
 
               fields:
+                header.sitemap.ignore:
+                  type: toggle
+                  toggleable: true
+                  label: PLUGIN_SITEMAP.HEADER_IGNORE
+                  highlight: 0
+                  options:
+                    1: PLUGIN_ADMIN.YES
+                    0: PLUGIN_ADMIN.NO
+                  validate:
+                    type: bool
+                    required: false
+
                 header.sitemap.changefreq:
                   type: select
                   label: PLUGIN_SITEMAP.HEADER_CHANGEFREQ

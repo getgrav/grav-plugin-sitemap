@@ -9,7 +9,9 @@
     <xhtml:link rel="alternate" hreflang="{{ language }}" href="{{uri.rootUrl(true)}}{{grav.language.getLanguageURLPrefix(language)}}{{ page_route }}" />
 {% endfor %}
 {% endif %}
+{% if entry.lastmod %}
     <lastmod>{{ entry.lastmod }}</lastmod>
+{% endif %}
 {% if entry.changefreq %}
     <changefreq>{{ entry.changefreq }}</changefreq>
 {% endif %}

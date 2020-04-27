@@ -1,6 +1,7 @@
 en:
   PLUGIN_SITEMAP:
     SITEMAP: 'Sitemap'
+    HEADER_IGNORE: 'Sitemap ignore page'
     HEADER_CHANGEFREQ: 'Sitemap change frequency'
     HEADER_PRIORITY: 'Sitemap priority'
     CHANGEFREQ: 'Global - sitemap change frequency'
@@ -69,6 +70,7 @@ uk:
     ADDITIONS_HELP: 'Додати зовнішні URL-адреси до карти сайту'
     LOCATION: 'Розташування URL-адреси'
     LASTMOD: 'Остання модифікація, напр. 2017-04-06'
+
 de:
   PLUGIN_SITEMAP:
     SITEMAP: 'Sitemap'
@@ -92,3 +94,28 @@ de:
     ADDITIONS_HELP: 'Füge externe URLs zur Sitemap hinzu'
     LOCATION: 'Seiten Pfad'
     LASTMOD: 'Letzte Änderung e.g. 2017-04-06'
+
+zh:
+  PLUGIN_SITEMAP:
+    SITEMAP: '网站地图'
+    HEADER_CHANGEFREQ: '网站地图变更频率'
+    HEADER_PRIORITY: '网站地图优先级'
+    CHANGEFREQ: '全局 - 网站地图变更频率'
+    CHANGEFREQ_DEFAULT: '使用全局 (每日)'
+    CHANGEFREQ_ALWAYS: '总是'
+    CHANGEFREQ_HOURLY: '每小时'
+    CHANGEFREQ_DAILY: '每天'
+    CHANGEFREQ_WEEKLY: '每周'
+    CHANGEFREQ_MONTHLY: '每月'
+    CHANGEFREQ_YEARLY: '每年'
+    CHANGEFREQ_NEVER: '永不'
+    PRIORITY: '全局 - 网站地图优先级'
+    PRIORITY_USE_GLOBAL: '使用全局 (1)'
+    ROUTE: '网站地图路径'
+    IGNORES: '忽略'
+    IGNORES_HELP: '忽略的 URL'
+    ADDITIONS: '附加 URL'
+    ADDITIONS_HELP: '添加外部 URL 到网站地图'
+    LOCATION: 'URL 地址'
+    LASTMOD: '上次修改 例如 2017-04-06'
+

@@ -1,3 +1,12 @@
+# v1.9.5
+## 04/27/2020
+
+1. [](#improved)
+    * Add admin toggle for `ignore` [#68](https://github.com/getgrav/grav-plugin-sitemap/pull/68)
+    * Omit empty `<lastmod>` [#70](https://github.com/getgrav/grav-plugin-sitemap/pull/70)
+    * Added Chinese language [#73](https://github.com/getgrav/grav-plugin-sitemap/pull/73)
+    * Added German language [#66](https://github.com/getgrav/grav-plugin-sitemap/pull/66)
+
 # v1.9.4
 ## 10/19/2019
 

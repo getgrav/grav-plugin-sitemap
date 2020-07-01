@@ -22,7 +22,8 @@ en:
     ADDITIONS_HELP: 'Add external URLs to the sitemap'
     LOCATION: 'The URL location'
     LASTMOD: 'Last modification e.g. 2017-04-06'
-
+    IGNORE_EXTERNAL: 'Ignore External URLs'
+    IGNORE_EXTERNAL_HELP: 'By default Sitemap hides pages that have an `external` URL'
 ru:
   PLUGIN_SITEMAP:
     SITEMAP: 'Карта сайта'

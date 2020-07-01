@@ -75,7 +75,7 @@ class SitemapPlugin extends Plugin
     {
         // get grav instance and current language
         $grav = Grav::instance();
-        $current_lang = $grav['language']->getLanguage();
+        $current_lang = $grav['language']->getLanguage() ?: 'en';
 
         /** @var Pages $pages */
         $pages = $this->grav['pages'];

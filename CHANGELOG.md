@@ -8,6 +8,8 @@
     * Improved `SitemapEntry` to allow setting via constructor
     * Added `changefreq` and `priority` to manually and dynamically added entries
     * Use composer for autoloading
+1. [](#bugfix)
+    * Force a fallback to `en` to ensure you can't get `null/false` language [#74](https://github.com/getgrav/grav-plugin-sitemap/issues/74)   
     
 # v1.9.5
 ## 04/27/2020

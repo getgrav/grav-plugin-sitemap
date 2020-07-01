@@ -7,6 +7,7 @@
 1. [](#improved)
     * Improved `SitemapEntry` to allow setting via constructor
     * Added `changefreq` and `priority` to manually and dynamically added entries
+    * Use composer for autoloading
     
 # v1.9.5
 ## 04/27/2020

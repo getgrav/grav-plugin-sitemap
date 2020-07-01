@@ -1,3 +1,13 @@
+# v2.0.0
+## 07/01/2020
+
+1. [](#new)
+    * Added a new `Ignore External URLs` option that defaults to `true`
+    * Added a new `onSitemapProcessed()` event to allow for dynamic manipulation of the sitemap
+1. [](#improved)
+    * Improved `SitemapEntry` to allow setting via constructor
+    * Added `changefreq` and `priority` to manually and dynamically added entries
+    
 # v1.9.5
 ## 04/27/2020
 

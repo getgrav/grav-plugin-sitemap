@@ -7,6 +7,7 @@ use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
 use Grav\Common\Uri;
 use Grav\Common\Page\Pages;
+use Grav\Common\Utils;
 use RocketTheme\Toolbox\Event\Event;
 
 class SitemapPlugin extends Plugin
@@ -69,15 +70,19 @@ class SitemapPlugin extends Plugin
         ksort($routes);
 
         $ignores = (array) $this->config->get('plugins.sitemap.ignores');
+        $ignore_external = $this->config->get('plugins.sitemap.ignore_external');
 
         foreach ($routes as $route => $path) {
             $page = $pages->get($path);
             $header = $page->header();
-            $page_ignored = isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false;
+            $external_url = $ignore_external ? isset($header->external_url) : false;
+            $page_ignored = $external_url || (isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false);
             $page_languages = $page->translatedLanguages();
             $lang_available = (empty($page_languages) || array_key_exists($current_lang, $page_languages));
 
+
             if ($page->published() && $page->routable() && !preg_match(sprintf("@^(%s)$@i", implode('|', $ignores)), $page->route()) && !$page_ignored && $lang_available ) {
+                
                 $entry = new SitemapEntry();
                 $entry->location = $page->canonical();
                 $entry->lastmod = date('Y-m-d', $page->modified());
@@ -103,16 +108,16 @@ class SitemapPlugin extends Plugin
             }
         }
 
-        $rootUrl = $this->grav['uri']->rootUrl(true) . $pages->base();
         $additions = (array) $this->config->get('plugins.sitemap.additions');
-
         foreach ($additions as $addition) {
-            $entry = new SitemapEntry();
-            $entry->location = $rootUrl . $addition['location'];
-            $entry->lastmod = $addition['lastmod'];
-
-            $this->sitemap[] = $entry;
+            if (isset($addition['location'])) {
+                $location = Utils::url($addition['location'], true);
+                $entry = new SitemapEntry($location,$addition['lastmod']??null,$addition['changefreq']??null, $addition['priority']??null);
+                $this->sitemap[$location] = $entry;
+            }
         }
+
+        $this->grav->fireEvent('onSitemapProcessed', new Event(['sitemap' => &$this->sitemap]));
     }
 
     public function onPageInitialized($event)

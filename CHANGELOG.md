@@ -3,6 +3,7 @@
 
 1. [](#new)
     * Added a new `Ignore External URLs` option that defaults to `true`
+    * Added a new `Ignore Protected Pages' option that defaults to `true`
     * Added a new `onSitemapProcessed()` event to allow for dynamic manipulation of the sitemap
 1. [](#improved)
     * Improved `SitemapEntry` to allow setting via constructor

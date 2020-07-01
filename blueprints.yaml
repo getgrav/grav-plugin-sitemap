@@ -81,6 +81,18 @@ form:
       validate:
         type: bool
 
+    ignore_protected:
+      type: toggle
+      label: PLUGIN_SITEMAP.IGNORE_PROTECTED
+      help: PLUGIN_SITEMAP.IGNORE_PROTECTED_HELP
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
     ignores:
       type: array
       label: PLUGIN_SITEMAP.IGNORES

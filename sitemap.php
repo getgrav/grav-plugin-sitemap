@@ -84,12 +84,14 @@ class SitemapPlugin extends Plugin
 
         $ignores = (array) $this->config->get('plugins.sitemap.ignores');
         $ignore_external = $this->config->get('plugins.sitemap.ignore_external');
+        $ignore_protected = $this->config->get('plugins.sitemap.ignore_protected');
 
         foreach ($routes as $route => $path) {
             $page = $pages->get($path);
             $header = $page->header();
             $external_url = $ignore_external ? isset($header->external_url) : false;
-            $page_ignored = $external_url || (isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false);
+            $protected_page = $ignore_protected ? isset($header->access) : false;
+            $page_ignored = $protected_page || $external_url || (isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false);
             $page_languages = $page->translatedLanguages();
             $lang_available = (empty($page_languages) || array_key_exists($current_lang, $page_languages));
 

@@ -24,6 +24,8 @@ en:
     LASTMOD: 'Last modification e.g. 2017-04-06'
     IGNORE_EXTERNAL: 'Ignore External URLs'
     IGNORE_EXTERNAL_HELP: 'By default Sitemap hides pages that have an `external` URL'
+    IGNORE_PROTECTED: 'Ignore Protected Pages'
+    IGNORE_PROTECTED_HELP: 'Ignore pages that custom "access" set to protect them via a login'
 ru:
   PLUGIN_SITEMAP:
     SITEMAP: 'Карта сайта'

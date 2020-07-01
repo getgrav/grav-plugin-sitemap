@@ -1,6 +1,7 @@
 <?php
 namespace Grav\Plugin;
 
+use Composer\Autoload\ClassLoader;
 use Grav\Common\Grav;
 use Grav\Common\Data;
 use Grav\Common\Page\Page;
@@ -8,6 +9,7 @@ use Grav\Common\Plugin;
 use Grav\Common\Uri;
 use Grav\Common\Page\Pages;
 use Grav\Common\Utils;
+use Grav\Plugin\Sitemap\SitemapEntry;
 use RocketTheme\Toolbox\Event\Event;
 
 class SitemapPlugin extends Plugin
@@ -23,9 +25,22 @@ class SitemapPlugin extends Plugin
     public static function getSubscribedEvents()
     {
         return [
-            'onPluginsInitialized' => ['onPluginsInitialized', 0],
+            'onPluginsInitialized' => [
+                ['autoload', 100000], // TODO: Remove when plugin requires Grav >=1.7
+                ['onPluginsInitialized', 0],
+            ],
             'onBlueprintCreated' => ['onBlueprintCreated', 0]
         ];
+    }
+
+    /**
+     * Composer autoload.
+     *is
+     * @return ClassLoader
+     */
+    public function autoload(): ClassLoader
+    {
+        return require __DIR__ . '/vendor/autoload.php';
     }
 
     /**
@@ -58,8 +73,6 @@ class SitemapPlugin extends Plugin
      */
     public function onPagesInitialized()
     {
-        require_once __DIR__ . '/classes/sitemapentry.php';
-
         // get grav instance and current language
         $grav = Grav::instance();
         $current_lang = $grav['language']->getLanguage();

@@ -33,11 +33,25 @@ The `sitemap` plugin works out of the box. You can just go directly to `http://y
 
 ```
 enabled: true
+changefreq: daily
+priority: !!float 1
 route: '/sitemap'
+ignore_external: true
 ignores:
   - /blog/blog-post-to-ignore
   - /ignore-this-route
   - /ignore-children-of-this-route/.*
+additions:
+  -
+    location: /something-special
+    lastmod: '2020-04-16'
+    changefreq: hourly
+    priority: 0.3
+  -
+    location: /something-else
+    lastmod: '2020-04-17'
+    changefreq: weekly
+    priority: 0.2
 ```
 
 You can ignore your own pages by providing a list of routes to ignore. You can also use a page's Frontmatter to signal that the sitemap should ignore it:
@@ -61,6 +75,26 @@ You can manually add URLs to the sitemap using the Admin settings, or by adding 
 ```
 additions:
   -
-    location: /not-a-grav-url
-    lastmod: '2017-04-06'
+    location: /something-special
+    lastmod: '2020-04-16'
+    changefreq: hourly
+    priority: 0.3
 ```
+
+## Dynamically adding pages to the sitemap
+
+If you have some dynamic content being added to your site via another plugin, or perhaps a 3rd party API, you can now add them dynamically to the sitemap with a simple event:
+
+Make sure you are subscribed to the `` event then add simply add your entry to the sitemap like this:
+
+```php
+    public function onSitemapProcessed(\RocketTheme\Toolbox\Event\Event $e)
+    {
+        $sitemap = $e['sitemap'];
+        $location = \Grav\Common\Utils::url('/foo-location', true);
+        $sitemap['/foo'] = new \Grav\Plugin\Sitemap\SitemapEntry($location, '2020-07-02', 'weekly', '2.0');
+        $e['sitemap'] = $sitemap;
+    }
+```
+
+The use `Utils::url()` method allow us to easily create the correct full URL by passing it a route plus the optional `true` parameter.

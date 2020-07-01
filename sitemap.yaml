@@ -1,4 +1,8 @@
 enabled: true
 route: '/sitemap'
+ignore_external: true
+ignore_protected: true
+ignores:
+whitelist:
 changefreq: daily
 priority: !!float 1

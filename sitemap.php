@@ -1,12 +1,15 @@
 <?php
 namespace Grav\Plugin;
 
+use Composer\Autoload\ClassLoader;
 use Grav\Common\Grav;
 use Grav\Common\Data;
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
 use Grav\Common\Uri;
 use Grav\Common\Page\Pages;
+use Grav\Common\Utils;
+use Grav\Plugin\Sitemap\SitemapEntry;
 use RocketTheme\Toolbox\Event\Event;
 
 class SitemapPlugin extends Plugin
@@ -22,9 +25,22 @@ class SitemapPlugin extends Plugin
     public static function getSubscribedEvents()
     {
         return [
-            'onPluginsInitialized' => ['onPluginsInitialized', 0],
+            'onPluginsInitialized' => [
+                ['autoload', 100000], // TODO: Remove when plugin requires Grav >=1.7
+                ['onPluginsInitialized', 0],
+            ],
             'onBlueprintCreated' => ['onBlueprintCreated', 0]
         ];
+    }
+
+    /**
+     * Composer autoload.
+     *is
+     * @return ClassLoader
+     */
+    public function autoload(): ClassLoader
+    {
+        return require __DIR__ . '/vendor/autoload.php';
     }
 
     /**
@@ -57,11 +73,9 @@ class SitemapPlugin extends Plugin
      */
     public function onPagesInitialized()
     {
-        require_once __DIR__ . '/classes/sitemapentry.php';
-
         // get grav instance and current language
         $grav = Grav::instance();
-        $current_lang = $grav['language']->getLanguage();
+        $current_lang = $grav['language']->getLanguage() ?: 'en';
 
         /** @var Pages $pages */
         $pages = $this->grav['pages'];
@@ -69,15 +83,21 @@ class SitemapPlugin extends Plugin
         ksort($routes);
 
         $ignores = (array) $this->config->get('plugins.sitemap.ignores');
+        $ignore_external = $this->config->get('plugins.sitemap.ignore_external');
+        $ignore_protected = $this->config->get('plugins.sitemap.ignore_protected');
 
         foreach ($routes as $route => $path) {
             $page = $pages->get($path);
             $header = $page->header();
-            $page_ignored = isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false;
+            $external_url = $ignore_external ? isset($header->external_url) : false;
+            $protected_page = $ignore_protected ? isset($header->access) : false;
+            $page_ignored = $protected_page || $external_url || (isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false);
             $page_languages = $page->translatedLanguages();
             $lang_available = (empty($page_languages) || array_key_exists($current_lang, $page_languages));
 
+
             if ($page->published() && $page->routable() && !preg_match(sprintf("@^(%s)$@i", implode('|', $ignores)), $page->route()) && !$page_ignored && $lang_available ) {
+                
                 $entry = new SitemapEntry();
                 $entry->location = $page->canonical();
                 $entry->lastmod = date('Y-m-d', $page->modified());
@@ -103,16 +123,16 @@ class SitemapPlugin extends Plugin
             }
         }
 
-        $rootUrl = $this->grav['uri']->rootUrl(true) . $pages->base();
         $additions = (array) $this->config->get('plugins.sitemap.additions');
-
         foreach ($additions as $addition) {
-            $entry = new SitemapEntry();
-            $entry->location = $rootUrl . $addition['location'];
-            $entry->lastmod = $addition['lastmod'];
-
-            $this->sitemap[] = $entry;
+            if (isset($addition['location'])) {
+                $location = Utils::url($addition['location'], true);
+                $entry = new SitemapEntry($location,$addition['lastmod']??null,$addition['changefreq']??null, $addition['priority']??null);
+                $this->sitemap[$location] = $entry;
+            }
         }
+
+        $this->grav->fireEvent('onSitemapProcessed', new Event(['sitemap' => &$this->sitemap]));
     }
 
     public function onPageInitialized($event)

@@ -1,3 +1,17 @@
+# v2.0.0
+## 07/01/2020
+
+1. [](#new)
+    * Added a new `Ignore External URLs` option that defaults to `true`
+    * Added a new `Ignore Protected Pages` option that defaults to `true` [#62](https://github.com/getgrav/grav-plugin-sitemap/issues/62)
+    * Added a new `onSitemapProcessed()` event to allow for dynamic manipulation of the sitemap
+1. [](#improved)
+    * Improved `SitemapEntry` to allow setting via constructor
+    * Added `changefreq` and `priority` to manually and dynamically added entries
+    * Use composer for autoloading
+1. [](#bugfix)
+    * Force a fallback to `en` to ensure you can't get `null/false` language [#74](https://github.com/getgrav/grav-plugin-sitemap/issues/74)   
+    
 # v1.9.5
 ## 04/27/2020
 

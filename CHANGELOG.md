@@ -1,3 +1,9 @@
+# v2.0.1
+## 07/01/2020
+
+1. [](#bugfix)
+    * Fixed a case issue with `SitemapEntry` PHP class
+
 # v2.0.0
 ## 07/01/2020
 

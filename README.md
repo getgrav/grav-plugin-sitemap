@@ -80,6 +80,7 @@ additions:
     changefreq: hourly
     priority: 0.3
 ```
+Note that Regex support is available: Just append `.*` to a path to ignore all of it's children.
 
 ## Dynamically adding pages to the sitemap
 

@@ -6,3 +6,4 @@ ignores:
 whitelist:
 changefreq: daily
 priority: !!float 1
+images: null

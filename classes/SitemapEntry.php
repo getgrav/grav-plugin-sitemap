@@ -7,7 +7,7 @@ class SitemapEntry
     public $lastmod;
     public $changefreq;
     public $priority;
-    public $image;
+    public $images;
 
     /**
      * SitemapEntry constructor.
@@ -16,14 +16,14 @@ class SitemapEntry
      * @param null $lastmod
      * @param null $changefreq
      * @param null $priority
-     * @param null $image
+     * @param null $images
      */
-    public function __construct($location = null, $lastmod = null, $changefreq = null, $priority = null, $image = null)
+    public function __construct($location = null, $lastmod = null, $changefreq = null, $priority = null, $images = null)
     {
         $this->location = $location;
         $this->lastmod = $lastmod;
         $this->changefreq = $changefreq;
         $this->priority = $priority;
-        $this->image = $image;
+        $this->images = $images;
     }
 }

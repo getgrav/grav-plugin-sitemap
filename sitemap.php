@@ -95,9 +95,8 @@ class SitemapPlugin extends Plugin
             $page_languages = $page->translatedLanguages();
             $lang_available = (empty($page_languages) || array_key_exists($current_lang, $page_languages));
 
-
             if ($page->published() && $page->routable() && !preg_match(sprintf("@^(%s)$@i", implode('|', $ignores)), $page->route()) && !$page_ignored && $lang_available ) {
-                
+
                 $entry = new SitemapEntry();
                 $entry->location = $page->canonical();
                 $entry->lastmod = date('Y-m-d', $page->modified());
@@ -105,6 +104,17 @@ class SitemapPlugin extends Plugin
                 // optional changefreq & priority that you can set in the page header
                 $entry->changefreq = (isset($header->sitemap['changefreq'])) ? $header->sitemap['changefreq'] : $this->config->get('plugins.sitemap.changefreq');
                 $entry->priority = (isset($header->sitemap['priority'])) ? $header->sitemap['priority'] : $this->config->get('plugins.sitemap.priority');
+
+                // optional add image
+                $images = (isset($header->sitemap['images'])) ? $header->sitemap['images'] : $this->config->get('plugins.sitemap.images');
+
+                if (isset($images)) {
+                    foreach ($images as $image => $values) {
+                        $images[$image]['loc'] = $this->grav['uri']->base() . $page->media()->all()[$images[$image]['loc']]->url();
+                    }
+                }
+
+                $entry->images = $images;
 
                 if (count($this->config->get('system.languages.supported', [])) > 0) {
                     $entry->translated = $page->translatedLanguages(true);

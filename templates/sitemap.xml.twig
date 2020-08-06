@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="{{ uri.rootUrl }}/user/plugins/sitemap/sitemap.xsl"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 {% for entry in sitemap %}
   <url>
     <loc>{{ entry.location|e }}</loc>
@@ -17,6 +19,22 @@
 {% endif %}
 {% if entry.priority %}
     <priority>{{ entry.priority|number_format(1) }}</priority>
+{% endif %}
+{% if entry.images %}
+{% for image in entry.images %}
+    <image:image>
+      <image:loc>{{ image.loc }}</image:loc>
+{% if image.caption %}
+      <image:caption>{{ image.caption }}</image:caption>
+{% endif %}
+{% if image.geoloc %}
+      <image:geo_location>{{ image.geoloc }}</image:geo_location>
+{% endif %}
+{% if image.title %}
+      <image:title>{{ image.title }}</image:title>
+{% endif %}
+    </image:image>
+{% endfor %}
 {% endif %}
   </url>
 {% endfor %}

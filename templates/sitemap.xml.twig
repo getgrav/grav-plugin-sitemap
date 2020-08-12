@@ -20,7 +20,6 @@
 {% if entry.priority %}
     <priority>{{ entry.priority|number_format(1) }}</priority>
 {% endif %}
-{% if entry.images %}
 {% for image in entry.images %}
     <image:image>
       <image:loc>{{ image.loc }}</image:loc>
@@ -33,9 +32,11 @@
 {% if image.title %}
       <image:title>{{ image.title }}</image:title>
 {% endif %}
+{% if image.license %}
+      <image:license>{{ image.license }}</image:license>
+{% endif %}
     </image:image>
 {% endfor %}
-{% endif %}
   </url>
 {% endfor %}
 </urlset>

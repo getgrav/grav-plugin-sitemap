@@ -67,7 +67,6 @@ If you want your sitemap to only be accessible via `sitemap.xml` for example, se
 
 `Redirect 301 /sitemap /sitemap.xml`
 
-
 ## Manually add pages to the sitemap
 
 You can manually add URLs to the sitemap using the Admin settings, or by adding entries to your `sitemap.yaml` with this format:
@@ -99,3 +98,20 @@ Make sure you are subscribed to the `` event then add simply add your entry to t
 ```
 
 The use `Utils::url()` method allow us to easily create the correct full URL by passing it a route plus the optional `true` parameter.
+
+## Images
+
+You can add images to the sitemap by adding an entry in the page's Frontmatter.
+
+```
+sitemap:
+    images:
+        your_image:
+            loc: your-image.png
+            caption: A caption for the image
+            geoloc: Amsterdam, The Netherlands
+            title: The title of your image
+            license: A URL to the license of the image.
+```
+
+For more info on images in sitemaps see [Google image sitemaps](https://support.google.com/webmasters/answer/178636?hl=en).

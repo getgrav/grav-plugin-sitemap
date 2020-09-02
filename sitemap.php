@@ -2,7 +2,6 @@
 namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
-use Grav\Common\Grav;
 use Grav\Common\Data;
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
@@ -73,11 +72,11 @@ class SitemapPlugin extends Plugin
      */
     public function onPagesInitialized()
     {
-        // get grav instance and current language
-        $grav = Grav::instance();
-        $current_lang = $grav['language']->getLanguage() ?: 'en';
+        // get enabled languages
+        $enabled_languages = $this->grav['language']->getLanguages();
+        $is_multi_language_enabled = !empty($enabled_languages);
 
-        /** @var Pages $pages */
+        // get all pages
         $pages = $this->grav['pages'];
         $routes = array_unique($pages->routes());
         ksort($routes);
@@ -86,40 +85,45 @@ class SitemapPlugin extends Plugin
         $ignore_external = $this->config->get('plugins.sitemap.ignore_external');
         $ignore_protected = $this->config->get('plugins.sitemap.ignore_protected');
 
-        foreach ($routes as $route => $path) {
+        // for each page
+        foreach ($routes as $path) {
             $page = $pages->get($path);
             $header = $page->header();
             $external_url = $ignore_external ? isset($header->external_url) : false;
             $protected_page = $ignore_protected ? isset($header->access) : false;
             $page_ignored = $protected_page || $external_url || (isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false);
-            $page_languages = $page->translatedLanguages();
-            $lang_available = (empty($page_languages) || array_key_exists($current_lang, $page_languages));
 
-
-            if ($page->published() && $page->routable() && !preg_match(sprintf("@^(%s)$@i", implode('|', $ignores)), $page->route()) && !$page_ignored && $lang_available ) {
-                
-                $entry = new SitemapEntry();
-                $entry->location = $page->canonical();
-                $entry->lastmod = date('Y-m-d', $page->modified());
-
-                // optional changefreq & priority that you can set in the page header
-                $entry->changefreq = (isset($header->sitemap['changefreq'])) ? $header->sitemap['changefreq'] : $this->config->get('plugins.sitemap.changefreq');
-                $entry->priority = (isset($header->sitemap['priority'])) ? $header->sitemap['priority'] : $this->config->get('plugins.sitemap.priority');
-
-                if (count($this->config->get('system.languages.supported', [])) > 0) {
-                    $entry->translated = $page->translatedLanguages(true);
-
-                    foreach($entry->translated as $lang => $page_route) {
-                        $page_route = $page->rawRoute();
-                        if ($page->home()) {
-                            $page_route = '';
-                        }
-
-                        $entry->translated[$lang] = $page_route;
-                    }
+            // if page is routable and not on any ignore list
+            if ($page->routable() && !preg_match(sprintf("@^(%s)$@i", implode('|', $ignores)), $page->route()) && !$page_ignored) {
+                // add entry to sitemap as-is if multi-language is not enabled and page is published
+                if (!$is_multi_language_enabled and $page->published()) {
+                    $this->addSitemapEntry($page, $page->canonical());
                 }
 
-                $this->sitemap[$route] = $entry;
+                // add one entry to sitemap for each published translation if multi-language is enabled
+                else {
+                    // get all published translations of current page, and filter only enabled languages
+                    $published_translations = array_filter(
+                        $page->translatedLanguages(true),
+                        function ($lang) use ($enabled_languages) {
+                            return in_array($lang, $enabled_languages);
+                        },
+                        ARRAY_FILTER_USE_KEY
+                    );
+
+                    // compute canonical URL for all published translations
+                    array_walk(
+                        $published_translations,
+                        function (&$item, $key) use ($page) {
+                            $item = rtrim($this->grav['uri']->rootUrl(true) . $this->grav['language']->getLanguageURLPrefix($key) . $page->routeCanonical(), '/');
+                        }
+                    );
+
+                    // add one entry for each published translation
+                    foreach ($published_translations as $location) {
+                        $this->addSitemapEntry($page, $location);
+                    }
+                }
             }
         }
 
@@ -128,7 +132,7 @@ class SitemapPlugin extends Plugin
             if (isset($addition['location'])) {
                 $location = Utils::url($addition['location'], true);
                 $entry = new SitemapEntry($location,$addition['lastmod']??null,$addition['changefreq']??null, $addition['priority']??null);
-                $this->sitemap[$location] = $entry;
+                $this->sitemap[$entry->location] = $entry;
             }
         }
 
@@ -189,5 +193,24 @@ class SitemapPlugin extends Plugin
                 $inEvent = false;
             }
         }
+    }
+
+    /**
+     * Build a new SitemapEntry with given location for given page and it to sitemap.
+     * 
+     * @param Page $page
+     * @param string $location
+     */
+    private function addSitemapEntry($page, $location) {
+        $entry = new SitemapEntry();
+
+        $entry->location = $location;
+        $entry->lastmod = date('Y-m-d', $page->modified());
+
+        // optional changefreq & priority that you can set in the page header
+        $entry->changefreq = (isset($page->header()->sitemap['changefreq'])) ? $page->header()->sitemap['changefreq'] : $this->config->get('plugins.sitemap.changefreq');
+        $entry->priority = (isset($page->header()->sitemap['priority'])) ? $page->header()->sitemap['priority'] : $this->config->get('plugins.sitemap.priority');
+
+        $this->sitemap[$entry->location] = $entry;
     }
 }

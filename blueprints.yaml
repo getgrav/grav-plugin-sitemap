@@ -1,8 +1,8 @@
 name: Sitemap
-version: 2.0.1
-description: "Provide automatically generated **XML sitemaps** with this very useful, but simple to configure, Grav plugin."
-slug: sitemap
 type: plugin
+slug: sitemap
+version: 2.0.2
+description: "Provide automatically generated **XML sitemaps** with this very useful, but simple to configure, Grav plugin."
 icon: map-marker
 author:
   name: Team Grav

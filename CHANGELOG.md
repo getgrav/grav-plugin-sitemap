@@ -1,3 +1,9 @@
+# v2.0.2
+## 12/02/2020
+
+1. [](#improved)
+    * Improved readme/blueprints with regex information [#78](https://github.com/getgrav/grav-plugin-sitemap/pull/78)
+
 # v2.0.1
 ## 07/01/2020
 

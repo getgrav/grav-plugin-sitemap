@@ -4,11 +4,9 @@
 {% for entry in sitemap %}
   <url>
     <loc>{{ entry.location|e }}</loc>
-{% if entry.translated %}
-{% for language, page_route in entry.translated %}
-    <xhtml:link rel="alternate" hreflang="{{ language }}" href="{{uri.rootUrl(true)}}{{grav.language.getLanguageURLPrefix(language)}}{{ page_route }}" />
+{% for hreflang in entry.hreflangs %}
+    <xhtml:link rel="alternate" hreflang="{{ hreflang.hreflang }}" href="{{ hreflang.href }}" />
 {% endfor %}
-{% endif %}
 {% if entry.lastmod %}
     <lastmod>{{ entry.lastmod }}</lastmod>
 {% endif %}

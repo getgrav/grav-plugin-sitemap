@@ -92,13 +92,13 @@ class SitemapPlugin extends Plugin
         /** @var Cache $cache */
         $cache = $this->grav['cache'];
 
-        $cache_id = md5('sitemap-data-'.$cache->getKey());
+        /** @var Pages $pages */
+        $pages = $this->grav['pages'];
+
+        $cache_id = md5('sitemap-data-'.$pages->getPagesCacheId());
         $this->sitemap = $cache->fetch($cache_id);
 
         if ($this->sitemap === false) {
-            /** @var Pages $pages */
-            $pages = $this->grav['pages'];
-
             /** @var Language $language */
             $language = $this->grav['language'];
             $default_lang = $language->getDefault() ?: 'en';
@@ -112,7 +112,6 @@ class SitemapPlugin extends Plugin
             $this->default_change_freq = $this->config->get('plugins.sitemap.changefreq');
             $this->include_priority = $this->config->get('plugins.sitemap.include_priority');
             $this->default_priority = $this->config->get('plugins.sitemap.priority');
-
             $this->ignores = (array) $this->config->get('plugins.sitemap.ignores');
             $this->ignore_external = $this->config->get('plugins.sitemap.ignore_external');
             $this->ignore_protected = $this->config->get('plugins.sitemap.ignore_protected');
@@ -130,16 +129,13 @@ class SitemapPlugin extends Plugin
             foreach ($languages as $lang) {
                 foreach($this->route_data as $route => $route_data) {
                     if ($data = $route_data[$lang] ?? null) {
-
                         $entry = new SitemapEntry();
                         $entry->setData($data);
-
                         if ($language->enabled()) {
                             foreach ($route_data as $l => $l_data) {
                                 $entry->addHreflangs(['hreflang' => $l, 'href' => $l_data['location']]);
                             }
                         }
-
                         $this->sitemap[$data['route']] = $entry;
                     }
                 }
@@ -153,7 +149,6 @@ class SitemapPlugin extends Plugin
                     $this->sitemap[$location] = $entry;
                 }
             }
-
             $cache->save($cache_id, $this->sitemap);
         }
 
@@ -224,6 +219,7 @@ class SitemapPlugin extends Plugin
         foreach ($routes as $route => $path) {
             /** @var PageInterface $page */
             $page = $pages->get($path);
+
             $header = $page->header();
             $external_url = $this->ignore_external ? isset($header->external_url) : false;
             $protected_page = $this->ignore_protected ? isset($header->access) : false;
@@ -231,9 +227,7 @@ class SitemapPlugin extends Plugin
             $config_ignored = preg_match(sprintf("@^(%s)$@i", implode('|', $this->ignores)), $page->route());
             $page_ignored = $protected_page || $external_url || $redirect_page || (isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false);
 
-
             if ($page->routable() && $page->published() && !$config_ignored && !$page_ignored) {
-
                 $page_languages = array_keys($page->translatedLanguages());
                 $include_lang = $this->multilang_skiplang_prefix !== $lang;
                 $location = $page->canonical($include_lang);

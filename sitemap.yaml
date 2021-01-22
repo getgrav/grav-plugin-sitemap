@@ -4,5 +4,11 @@ ignore_external: true
 ignore_protected: true
 ignores:
 whitelist:
+urlset: 'http://www.sitemaps.org/schemas/sitemap/0.9'
+multilang:
+  include_fallbacks: true
+include_changefreq: true
 changefreq: daily
+short_date_format: true
+include_priority: true
 priority: !!float 1

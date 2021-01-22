@@ -9,6 +9,8 @@ class SitemapEntry
     public $priority;
     public $image;
 
+
+
     /**
      * SitemapEntry constructor.
      *

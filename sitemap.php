@@ -91,6 +91,8 @@ class SitemapPlugin extends Plugin
             $language->setActive($lang);
             $pages->reset();
 
+//            $pages->enablePages();
+
             $this->addRouteData($pages, $lang);
         }
 
@@ -219,17 +221,21 @@ class SitemapPlugin extends Plugin
         foreach ($routes as $route => $path) {
             /** @var PageInterface $page */
             $page = $pages->get($path);
-            $page_language = $page->language();
-            $page_languages = array_keys($page->translatedLanguages());
 
-            $lang_route = [
-                'route' => $route,
-                'raw_route' => $page->rawRoute(),
-                'base_language' => $page_language,
-                'title' => $page->title(),
-                'translated' => in_array($lang, $page_languages)
-            ];
-            $this->route_data[$path][$lang] = $lang_route;
+            if ($page->routable() && $page->visible()) {
+                $page_language = $page->language();
+                $page_languages = array_keys($page->translatedLanguages());
+
+                $lang_route = [
+                    'route' => $route,
+                    'raw_route' => $page->rawRoute(),
+                    'base_language' => $page_language,
+                    'title' => $page->title(),
+                    'translated' => in_array($lang, $page_languages)
+                ];
+                $this->route_data[$path][$lang] = $lang_route;
+            }
+
         }
 
     }

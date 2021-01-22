@@ -2,6 +2,7 @@
 namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
+use Grav\Common\Cache;
 use Grav\Common\Grav;
 use Grav\Common\Data;
 use Grav\Common\Language\Language;
@@ -19,7 +20,7 @@ class SitemapPlugin extends Plugin
     /**
      * @var array
      */
-    protected $sitemap = [];
+    protected $sitemap = false;
     protected $route_data = [];
 
     protected $multilang_skiplang_prefix = null;
@@ -88,113 +89,72 @@ class SitemapPlugin extends Plugin
      */
     public function onPagesInitialized()
     {
-        $grav = Grav::instance();
+        /** @var Cache $cache */
+        $cache = $this->grav['cache'];
 
-        /** @var Pages $pages */
-        $pages = $grav['pages'];
+        $cache_id = md5('sitemap-data-'.$cache->getKey());
+        $this->sitemap = $cache->fetch($cache_id);
 
-        /** @var Language $language */
-        $language = $grav['language'];
-        $default_lang = $language->getDefault() ?: 'en';
-        $languages = $language->enabled() ? $language->getLanguages() : [$default_lang];
+        if ($this->sitemap === false) {
+            /** @var Pages $pages */
+            $pages = $this->grav['pages'];
 
-        $this->multilang_skiplang_prefix = $this->config->get('system.languages.include_default_lang') ?  '' : $language->getDefault();
-        $this->multilang_include_fallbacks = $this->config->get('system.languages.pages_fallback_only') || !empty($this->config->get('system.languages.content_fallback'));
+            /** @var Language $language */
+            $language = $this->grav['language'];
+            $default_lang = $language->getDefault() ?: 'en';
+            $languages = $language->enabled() ? $language->getLanguages() : [$default_lang];
 
-        $this->datetime_format = $this->config->get('plugins.sitemap.short_date_format') ? 'Y-m-d' : 'Y-m-d\TH:i:sP';
-        $this->include_change_freq = $this->config->get('plugins.sitemap.include_changefreq');
-        $this->default_change_freq = $this->config->get('plugins.sitemap.changefreq');
-        $this->include_priority = $this->config->get('plugins.sitemap.include_priority');
-        $this->default_priority = $this->config->get('plugins.sitemap.priority');
+            $this->multilang_skiplang_prefix = $this->config->get('system.languages.include_default_lang') ?  '' : $language->getDefault();
+            $this->multilang_include_fallbacks = $this->config->get('system.languages.pages_fallback_only') || !empty($this->config->get('system.languages.content_fallback'));
 
-        $this->ignores = (array) $this->config->get('plugins.sitemap.ignores');
-        $this->ignore_external = $this->config->get('plugins.sitemap.ignore_external');
-        $this->ignore_protected = $this->config->get('plugins.sitemap.ignore_protected');
-        $this->ignore_redirect = $this->config->get('plugins.sitemap.ignore_redirect');
+            $this->datetime_format = $this->config->get('plugins.sitemap.short_date_format') ? 'Y-m-d' : 'Y-m-d\TH:i:sP';
+            $this->include_change_freq = $this->config->get('plugins.sitemap.include_changefreq');
+            $this->default_change_freq = $this->config->get('plugins.sitemap.changefreq');
+            $this->include_priority = $this->config->get('plugins.sitemap.include_priority');
+            $this->default_priority = $this->config->get('plugins.sitemap.priority');
 
-        // Gather data
-        foreach ($languages as $lang) {
-            $language->init();
-            $language->setActive($lang);
-            $pages->reset();
-            $this->addRouteData($pages, $lang);
-        }
+            $this->ignores = (array) $this->config->get('plugins.sitemap.ignores');
+            $this->ignore_external = $this->config->get('plugins.sitemap.ignore_external');
+            $this->ignore_protected = $this->config->get('plugins.sitemap.ignore_protected');
+            $this->ignore_redirect = $this->config->get('plugins.sitemap.ignore_redirect');
 
-        // Build sitemap
-        foreach ($languages as $lang) {
-            foreach($this->route_data as $route => $route_data) {
-                if ($data = $route_data[$lang] ?? null) {
+            // Gather data
+            foreach ($languages as $lang) {
+                $language->init();
+                $language->setActive($lang);
+                $pages->reset();
+                $this->addRouteData($pages, $lang);
+            }
 
-                    $entry = new SitemapEntry();
-                    $entry->setData($data);
+            // Build sitemap
+            foreach ($languages as $lang) {
+                foreach($this->route_data as $route => $route_data) {
+                    if ($data = $route_data[$lang] ?? null) {
 
-                    if ($language->enabled()) {
-                        foreach ($route_data as $l => $l_data) {
-                            $entry->addHreflangs(['hreflang' => $l, 'href' => $l_data['location']]);
+                        $entry = new SitemapEntry();
+                        $entry->setData($data);
+
+                        if ($language->enabled()) {
+                            foreach ($route_data as $l => $l_data) {
+                                $entry->addHreflangs(['hreflang' => $l, 'href' => $l_data['location']]);
+                            }
                         }
-                    }
 
-                    $this->sitemap[$data['route']] = $entry;
+                        $this->sitemap[$data['route']] = $entry;
+                    }
                 }
             }
-        }
 
-        $someit = true;
-
-
-//        /** @var Pages $pages */
-//        $pages = $this->grav['pages'];
-//        $routes = array_unique($pages->routes());
-//        ksort($routes);
-//
-//        $ignores = (array) $this->config->get('plugins.sitemap.ignores');
-//        $ignore_external = $this->config->get('plugins.sitemap.ignore_external');
-//        $ignore_protected = $this->config->get('plugins.sitemap.ignore_protected');
-//
-//        foreach ($routes as $route => $path) {
-//            $page = $pages->get($path);
-//            $header = $page->header();
-//            $external_url = $ignore_external ? isset($header->external_url) : false;
-//            $protected_page = $ignore_protected ? isset($header->access) : false;
-//            $page_ignored = $protected_page || $external_url || (isset($header->sitemap['ignore']) ? $header->sitemap['ignore'] : false);
-//            $page_languages = $page->translatedLanguages();
-//            $lang_available = (empty($page_languages) || array_key_exists($current_lang, $page_languages));
-//
-//
-//            if ($page->published() && $page->routable() && !preg_match(sprintf("@^(%s)$@i", implode('|', $ignores)), $page->route()) && !$page_ignored && $lang_available ) {
-//
-//                $entry = new SitemapEntry();
-//                $entry->location = $page->canonical();
-//                $entry->lastmod = date('Y-m-d', $page->modified());
-//
-//                // optional changefreq & priority that you can set in the page header
-//                $entry->changefreq = (isset($header->sitemap['changefreq'])) ? $header->sitemap['changefreq'] : $this->config->get('plugins.sitemap.changefreq');
-//                $entry->priority = (isset($header->sitemap['priority'])) ? $header->sitemap['priority'] : $this->config->get('plugins.sitemap.priority');
-//
-//                if (count($this->config->get('system.languages.supported', [])) > 0) {
-//                    $entry->translated = $page->translatedLanguages(true);
-//
-//                    foreach($entry->translated as $lang => $page_route) {
-//                        $page_route = $page->rawRoute();
-//                        if ($page->home()) {
-//                            $page_route = '';
-//                        }
-//
-//                        $entry->translated[$lang] = $page_route;
-//                    }
-//                }
-//
-//                $this->sitemap[$route] = $entry;
-//            }
-//        }
-//
-        $additions = (array) $this->config->get('plugins.sitemap.additions');
-        foreach ($additions as $addition) {
-            if (isset($addition['location'])) {
-                $location = Utils::url($addition['location'], true);
-                $entry = new SitemapEntry($location,$addition['lastmod'] ?? null,$addition['changefreq'] ?? null, $addition['priority'] ?? null);
-                $this->sitemap[$location] = $entry;
+            $additions = (array) $this->config->get('plugins.sitemap.additions');
+            foreach ($additions as $addition) {
+                if (isset($addition['location'])) {
+                    $location = Utils::url($addition['location'], true);
+                    $entry = new SitemapEntry($location,$addition['lastmod'] ?? null,$addition['changefreq'] ?? null, $addition['priority'] ?? null);
+                    $this->sitemap[$location] = $entry;
+                }
             }
+
+            $cache->save($cache_id, $this->sitemap);
         }
 
         $this->grav->fireEvent('onSitemapProcessed', new Event(['sitemap' => &$this->sitemap]));

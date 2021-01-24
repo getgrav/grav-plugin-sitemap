@@ -14,6 +14,7 @@ use Grav\Common\Page\Pages;
 use Grav\Common\Utils;
 use Grav\Plugin\Sitemap\SitemapEntry;
 use RocketTheme\Toolbox\Event\Event;
+use Twig\TwigFunction;
 
 class SitemapPlugin extends Plugin
 {
@@ -76,6 +77,7 @@ class SitemapPlugin extends Plugin
         if ($route && $route == $uri->path()) {
 
             $this->enable([
+                'onTwigInitialized' => ['onTwigInitialized', 0],
                 'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
                 'onPagesInitialized' => ['onPagesInitialized', 0],
                 'onPageInitialized' => ['onPageInitialized', 0],
@@ -161,15 +163,25 @@ class SitemapPlugin extends Plugin
         $route = $this->config->get('plugins.sitemap.route');
 
         if (is_null($page) || $page->route() !== $route) {
+            $extension = $this->grav['uri']->extension() ?? 'xml';
+
             // set a dummy page
             $page = new Page;
             $page->init(new \SplFileInfo(__DIR__ . '/pages/sitemap.md'));
+            $page->templateFormat($extension);
             unset($this->grav['page']);
             $this->grav['page'] = $page;
-
             $twig = $this->grav['twig'];
-            $twig->template = 'sitemap.xml.twig';
+            $twig->template = "sitemap.$extension.twig";
         }
+    }
+
+    // Access plugin events in this class
+    public function onTwigInitialized()
+    {
+        $this->grav['twig']->twig()->addFunction(
+            new TwigFunction('sort_sitemap_entries_by_language', [$this, 'sortSitemapEntriesByLanguage'])
+        );
     }
 
     /**
@@ -209,6 +221,22 @@ class SitemapPlugin extends Plugin
                 $inEvent = false;
             }
         }
+    }
+
+    public function sortSitemapEntriesByLanguage()
+    {
+        $entries = [];
+
+        foreach ((array) $this->sitemap as $route => $entry) {
+            $lang = $entry->getLang();
+            unset($entry->hreflangs);
+            unset($entry->image);
+            if ($lang === null) {
+                $lang = $this->grav['language']->getDefault() ?: 'en';
+            }
+            $entries[$lang][$route] = $entry;
+        }
+        return $entries;
     }
 
     protected function addRouteData($pages, $lang)

@@ -1,6 +1,8 @@
 # v3.0.0
 ## mm/dd/2021
 
+1. [](#new)
+    * Added support for new `sitemap.json` custom format that is useful for other plugins to understand the multi-language structure of the site
 1. [](#improved)
     * Vastly improved multi-language support utilizing [Google Search recommended SEO best-practices](https://developers.google.com/search/docs/advanced/crawling/localized-versions?hl=en&visit_id=637468720624267418-280936473&rd=2) for bi-directional linking to translated pages.
 

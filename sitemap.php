@@ -136,6 +136,9 @@ class SitemapPlugin extends Plugin
                         if ($language->enabled()) {
                             foreach ($route_data as $l => $l_data) {
                                 $entry->addHreflangs(['hreflang' => $l, 'href' => $l_data['location']]);
+                                if ($l === $default_lang) {
+                                    $entry->addHreflangs(['hreflang' => 'x-default', 'href' => $l_data['location']]);
+                                }
                             }
                         }
                         $this->sitemap[$data['route']] = $entry;

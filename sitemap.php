@@ -271,11 +271,27 @@ class SitemapPlugin extends Plugin
                 ];
 
                 if ($this->include_change_freq) {
-                    $lang_route['changefreq'] = $page->header()->sitemap['changefreq'] ?? $this->default_change_freq;
+                    $lang_route['changefreq'] = $header->sitemap['changefreq'] ?? $this->default_change_freq;
                 }
                 if ($this->include_priority) {
-                    $lang_route['priority']  = $page->header()->sitemap['priority'] ?? $this->default_priority;
+                    $lang_route['priority']  = $header->sitemap['priority'] ?? $this->default_priority;
                 }
+
+                // optional add image
+                $images = $header->sitemap['images'] ?? $this->config->get('plugins.sitemap.images') ?? [];
+
+                if (isset($images)) {
+                    foreach ($images as $image => $values) {
+                        if (isset($values['loc'])) {
+                            $images[$image]['loc'] = $page->media()[$values['loc']]->url();
+                        } else {
+                            unset($images[$image]);
+                        }
+                    }
+                    $lang_route['images'] = $images;
+                }
+
+
 
                 $this->route_data[$route][$lang] = $lang_route;
             }

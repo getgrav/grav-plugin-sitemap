@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="{{ uri.rootUrl }}/user/plugins/sitemap/sitemap.xsl"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="{{ config.plugins.sitemap.urlset }}"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 {% for entry in sitemap %}
   <url>
     <loc>{{ entry.location|e }}</loc>
-{% if entry.translated %}
-{% for language, page_route in entry.translated %}
-    <xhtml:link rel="alternate" hreflang="{{ language }}" href="{{uri.rootUrl(true)}}{{grav.language.getLanguageURLPrefix(language)}}{{ page_route }}" />
-{% endfor %}
-{% endif %}
-{% if entry.lastmod %}
+  {% for hreflang in entry.hreflangs %}
+    <xhtml:link rel="alternate" hreflang="{{ hreflang.hreflang }}" href="{{ hreflang.href }}" />
+  {% endfor %}
+  {% if entry.lastmod %}
     <lastmod>{{ entry.lastmod }}</lastmod>
-{% endif %}
-{% if entry.changefreq %}
+  {% endif %}
+  {% if entry.changefreq %}
     <changefreq>{{ entry.changefreq }}</changefreq>
-{% endif %}
-{% if entry.priority %}
+  {% endif %}
+  {% if entry.priority %}
     <priority>{{ entry.priority|number_format(1) }}</priority>
-{% endif %}
+  {% endif %}
+  {% for image in entry.images %}
+    <image:image>
+    {% if image.loc %}
+      <image:loc>{{ url(image.loc, true) }}</image:loc>
+    {% endif %}
+    {% if image.caption %}
+      <image:caption>{{ image.caption }}</image:caption>
+    {% endif %}
+    {% if image.geoloc %}
+      <image:geo_location>{{ image.geoloc }}</image:geo_location>
+    {% endif %}
+    {% if image.title %}
+      <image:title>{{ image.title }}</image:title>
+    {% endif %}
+    {% if image.license %}
+      <image:license>{{ image.license }}</image:license>
+    {% endif %}
+    </image:image>
+  {% endfor %}
   </url>
 {% endfor %}
 </urlset>

@@ -1,3 +1,12 @@
+# v3.0.0
+## 01/30/2021
+
+1. [](#new)
+    * Added complete multi-language support utilizing [Google Search recommended SEO best-practices](https://developers.google.com/search/docs/advanced/crawling/localized-versions?hl=en&visit_id=637468720624267418-280936473&rd=2) for bi-directional linking to translated pages.
+    * Added support fo `x-default` hreflang entries.
+    * Added support for new `sitemap.json` custom format that is useful for other plugins to understand the multi-language structure of the site
+    * Added support for sitemap images per [Google guidelines](https://developers.google.com/search/docs/advanced/sitemaps/image-sitemaps) [#81](https://github.com/getgrav/grav-plugin-sitemap/pull/81)
+
 # v2.0.2
 ## 12/02/2020
 

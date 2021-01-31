@@ -33,14 +33,21 @@ The `sitemap` plugin works out of the box. You can just go directly to `http://y
 
 ```
 enabled: true
-changefreq: daily
-priority: !!float 1
 route: '/sitemap'
 ignore_external: true
+ignore_protected: true
+ignore_redirect: true
 ignores:
   - /blog/blog-post-to-ignore
   - /ignore-this-route
   - /ignore-children-of-this-route/.*
+whitelist:
+urlset: 'http://www.sitemaps.org/schemas/sitemap/0.9'
+short_date_format: true
+include_changefreq: true
+changefreq: daily
+include_priority: true
+priority: !!float 1
 additions:
   -
     location: /something-special
@@ -61,12 +68,34 @@ sitemap:
     ignore: true
 ```
 
+## Multi-Language Support
+
+The latest Sitemap `v3.0` includes all new multi-language support utilizing the latest [Google Search SEO Recomendations](https://developers.google.com/search/docs/advanced/crawling/localized-versions?hl=en&visit_id=637468720624267418-280936473&rd=2) which creates bi-directional `hreflang` entries for each language available.
+
+This is handled automatically based on your Grav multi-language System configuration.
+
+## Images
+
+You can add images to the sitemap by adding an entry in the page's Frontmatter.
+
+```
+sitemap:
+    images:
+        your_image:
+            loc: your-image.png
+            caption: A caption for the image
+            geoloc: Amsterdam, The Netherlands
+            title: The title of your image
+            license: A URL to the license of the image.
+```
+
+For more info on images in sitemaps see [Google image sitemaps](https://support.google.com/webmasters/answer/178636?hl=en).
+
 ## Only allow access to the .xml file
 
 If you want your sitemap to only be accessible via `sitemap.xml` for example, set the route to `/sitemap` and add this to your `.htaccess` file:
 
 `Redirect 301 /sitemap /sitemap.xml`
-
 
 ## Manually add pages to the sitemap
 

@@ -1,7 +1,7 @@
 name: Sitemap
 type: plugin
 slug: sitemap
-version: 2.0.2
+version: 3.0.0
 description: "Provide automatically generated **XML sitemaps** with this very useful, but simple to configure, Grav plugin."
 icon: map-marker
 author:
@@ -29,6 +29,25 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+
+    urlset:
+      type: text
+      default: 'http://www.sitemaps.org/schemas/sitemap/0.9'
+      label: PLUGIN_SITEMAP.URLSET
+      help: PLUGIN_SITEMAP.URLSET_HELP
+
+    include_changefreq:
+      type: toggle
+      label: PLUGIN_SITEMAP.INCLUDE_CHANGEFREQ
+      help: PLUGIN_SITEMAP.INCLUDE_CHANGEFREQ_HELP
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
     changefreq:
       type: select
       label: PLUGIN_SITEMAP.CHANGEFREQ
@@ -42,7 +61,19 @@ form:
         monthly: PLUGIN_SITEMAP.CHANGEFREQ_MONTHLY
         yearly: PLUGIN_SITEMAP.CHANGEFREQ_YEARLY
         never:  PLUGIN_SITEMAP.CHANGEFREQ_NEVER
-        
+
+    include_priority:
+      type: toggle
+      label: PLUGIN_SITEMAP.INCLUDE_PRIORITY
+      help: PLUGIN_SITEMAP.INCLUDE_PRIORITY_HELP
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
     priority:
       type: select
       label: PLUGIN_SITEMAP.PRIORITY
@@ -61,6 +92,18 @@ form:
         '1.0': 1.0
       validate:
         type: float
+
+    short_date_format:
+      type: toggle
+      label: PLUGIN_ADMIN.SHORT_DATE_FORMAT
+      help: PLUGIN_ADMIN.SHORT_DATE_FORMAT_HELP
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
 
     route:
       type: text
@@ -85,6 +128,18 @@ form:
       type: toggle
       label: PLUGIN_SITEMAP.IGNORE_PROTECTED
       help: PLUGIN_SITEMAP.IGNORE_PROTECTED_HELP
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    ignore_redirect:
+      type: toggle
+      label: PLUGIN_SITEMAP.IGNORE_REDIRECT
+      help: PLUGIN_SITEMAP.IGNORE_REDIRECT_HELP
       highlight: 1
       default: 1
       options:

@@ -70,7 +70,7 @@ sitemap:
 
 ## Multi-Language Support
 
-The latest Sitemap v3.0 includes all new multi-language support utilizing the latest [Google Search SEO Recomendations](https://developers.google.com/search/docs/advanced/crawling/localized-versions?hl=en&visit_id=637468720624267418-280936473&rd=2) which creates bi-directional `hreflang` entries for each language available.
+The latest Sitemap `v3.0` includes all new multi-language support utilizing the latest [Google Search SEO Recomendations](https://developers.google.com/search/docs/advanced/crawling/localized-versions?hl=en&visit_id=637468720624267418-280936473&rd=2) which creates bi-directional `hreflang` entries for each language available.
 
 This is handled automatically based on your Grav multi-language System configuration.
 

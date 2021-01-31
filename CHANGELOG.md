@@ -1,5 +1,5 @@
 # v3.0.0
-## mm/dd/2021
+## 01/30/2021
 
 1. [](#new)
     * Added complete multi-language support utilizing [Google Search recommended SEO best-practices](https://developers.google.com/search/docs/advanced/crawling/localized-versions?hl=en&visit_id=637468720624267418-280936473&rd=2) for bi-directional linking to translated pages.

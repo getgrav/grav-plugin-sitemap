@@ -22,7 +22,69 @@ form:
     enabled:
       type: toggle
       label: PLUGIN_ADMIN.PLUGIN_STATUS
+      highlight: 0
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    ignore_external:
+      type: toggle
+      label: PLUGIN_SITEMAP.IGNORE_EXTERNAL
+      help: PLUGIN_SITEMAP.IGNORE_EXTERNAL_HELP
       highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    ignore_protected:
+      type: toggle
+      label: PLUGIN_SITEMAP.IGNORE_PROTECTED
+      help: PLUGIN_SITEMAP.IGNORE_PROTECTED_HELP
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    ignore_redirect:
+      type: toggle
+      label: PLUGIN_SITEMAP.IGNORE_REDIRECT
+      help: PLUGIN_SITEMAP.IGNORE_REDIRECT_HELP
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    ignores:
+      type: array
+      label: PLUGIN_SITEMAP.IGNORES
+      help: PLUGIN_SITEMAP.IGNORES_HELP
+      value_only: true
+      placeholder_value: '/ignore-this-route'
+
+    route:
+      type: text
+      label: PLUGIN_SITEMAP.ROUTE
+      placeholder: /sitemap
+      validate:
+        pattern: "/([a-z-_]+/?)+"
+
+    html_support:
+      type: toggle
+      label: PLUGIN_SITEMAP.HTML_SUPPORT
+      help: PLUGIN_SITEMAP.HTML_SUPPORT_HELP
+      highlight: 0
       default: 0
       options:
         1: PLUGIN_ADMIN.ENABLED
@@ -35,6 +97,18 @@ form:
       default: 'http://www.sitemaps.org/schemas/sitemap/0.9'
       label: PLUGIN_SITEMAP.URLSET
       help: PLUGIN_SITEMAP.URLSET_HELP
+
+    short_date_format:
+      type: toggle
+      label: PLUGIN_ADMIN.SHORT_DATE_FORMAT
+      help: PLUGIN_ADMIN.SHORT_DATE_FORMAT_HELP
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
 
     include_changefreq:
       type: toggle
@@ -92,68 +166,6 @@ form:
         '1.0': 1.0
       validate:
         type: float
-
-    short_date_format:
-      type: toggle
-      label: PLUGIN_ADMIN.SHORT_DATE_FORMAT
-      help: PLUGIN_ADMIN.SHORT_DATE_FORMAT_HELP
-      highlight: 1
-      default: 0
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-
-    route:
-      type: text
-      label: PLUGIN_SITEMAP.ROUTE
-      placeholder: /sitemap
-      validate:
-        pattern: "/([a-z-_]+/?)+"
-
-    ignore_external:
-      type: toggle
-      label: PLUGIN_SITEMAP.IGNORE_EXTERNAL
-      help: PLUGIN_SITEMAP.IGNORE_EXTERNAL_HELP
-      highlight: 1
-      default: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-
-    ignore_protected:
-      type: toggle
-      label: PLUGIN_SITEMAP.IGNORE_PROTECTED
-      help: PLUGIN_SITEMAP.IGNORE_PROTECTED_HELP
-      highlight: 1
-      default: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-
-    ignore_redirect:
-      type: toggle
-      label: PLUGIN_SITEMAP.IGNORE_REDIRECT
-      help: PLUGIN_SITEMAP.IGNORE_REDIRECT_HELP
-      highlight: 1
-      default: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-
-    ignores:
-      type: array
-      label: PLUGIN_SITEMAP.IGNORES
-      help: PLUGIN_SITEMAP.IGNORES_HELP
-      value_only: true
-      placeholder_value: '/ignore-this-route'
 
     additions:
       type: list

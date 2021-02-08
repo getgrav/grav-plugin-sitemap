@@ -9,6 +9,7 @@ use Grav\Common\Language\Language;
 use Grav\Common\Page\Interfaces\PageInterface;
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
+use Grav\Common\Twig\Twig;
 use Grav\Common\Uri;
 use Grav\Common\Page\Pages;
 use Grav\Common\Utils;
@@ -104,6 +105,7 @@ class SitemapPlugin extends Plugin
             /** @var Language $language */
             $language = $this->grav['language'];
             $default_lang = $language->getDefault() ?: 'en';
+            $active_lang = $language->getActive() ?? $default_lang;
             $languages = $language->enabled() ? $language->getLanguages() : [$default_lang];
 
             $this->multilang_skiplang_prefix = $this->config->get('system.languages.include_default_lang') ?  '' : $language->getDefault();
@@ -119,12 +121,19 @@ class SitemapPlugin extends Plugin
             $this->ignore_protected = $this->config->get('plugins.sitemap.ignore_protected');
             $this->ignore_redirect = $this->config->get('plugins.sitemap.ignore_redirect');
 
-            // Gather data
+            // Gather data for all languages
             foreach ($languages as $lang) {
                 $language->init();
                 $language->setActive($lang);
                 $pages->reset();
                 $this->addRouteData($pages, $lang);
+            }
+
+            // Reset back to active language
+            if ($language->enabled() && $language->getActive() !== $active_lang) {
+                $language->init();
+                $language->setActive($active_lang);
+                $pages->reset();
             }
 
             // Build sitemap
@@ -166,7 +175,8 @@ class SitemapPlugin extends Plugin
         $route = $this->config->get('plugins.sitemap.route');
 
         if (is_null($page) || $page->route() !== $route) {
-            $extension = $this->grav['uri']->extension() ?? 'xml';
+            $html_support = $this->config->get('plugins.sitemap.html_support', false);
+            $extension = $this->grav['uri']->extension() ?? ($html_support ? 'html': 'xml');
 
             // set a dummy page
             $page = new Page;

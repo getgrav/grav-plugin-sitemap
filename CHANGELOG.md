@@ -1,3 +1,9 @@
+# v3.0.1
+## mm/dd/2021
+
+1. [](#new)
+  * Added support for new optional `html_support` option that allows you to render the sitemap as an HTML page in your site when you access the sitemap URL with no extension or `.html`. Can be customized and extended in your theme as needed.
+
 # v3.0.0
 ## 01/30/2021
 

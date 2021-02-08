@@ -42,6 +42,7 @@ ignores:
   - /ignore-this-route
   - /ignore-children-of-this-route/.*
 whitelist:
+html_support: false
 urlset: 'http://www.sitemaps.org/schemas/sitemap/0.9'
 short_date_format: true
 include_changefreq: true
@@ -96,6 +97,12 @@ For more info on images in sitemaps see [Google image sitemaps](https://support.
 If you want your sitemap to only be accessible via `sitemap.xml` for example, set the route to `/sitemap` and add this to your `.htaccess` file:
 
 `Redirect 301 /sitemap /sitemap.xml`
+
+## HTML Support
+
+As of Sitemap version `3.0.1` you can enable `html_support` in the configuration and then when you go to `/sitemap` or `/sitemap.html` you will view an HTML version of the sitemap per the `templates/sitemap.html.twig` template.  
+
+You can copy and extend this Twig template in your theme to customize it for your needs.
 
 ## Manually add pages to the sitemap
 

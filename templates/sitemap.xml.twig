@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="{{ uri.rootUrl }}/user/plugins/sitemap/sitemap.xsl"?>
 <urlset xmlns="{{ config.plugins.sitemap.urlset }}"
+      {% if config.plugins.sitemap.include_news_tags %}
+        xmlns:news="{{ config.plugins.sitemap.urlnewsset }}"
+      {% endif %}
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 {% for entry in sitemap %}
   <url>
     <loc>{{ entry.location|e }}</loc>
+  {% if config.plugins.sitemap.include_news_tags %}
+    <news:news>
+      <news:publication>
+        <news:name>{{ site.title }}</news:name>
+        <news:language>{{ site.default_lang }}</news:language>
+      </news:publication>
+    {% if entry.lastmod %}
+      <news:publication_date>{{ entry.lastmod }}</news:publication_date>
+    {% endif %}
+      <news:title>{{ entry.title }}</news:title>
+    </news:news>
+  {% endif %}
   {% for hreflang in entry.hreflangs %}
     <xhtml:link rel="alternate" hreflang="{{ hreflang.hreflang }}" href="{{ hreflang.href }}" />
   {% endfor %}

@@ -3,10 +3,12 @@ route: '/sitemap'
 ignore_external: true
 ignore_protected: true
 ignore_redirect: true
+include_news_tags: false
 ignores:
 whitelist:
 html_support: false
 urlset: 'http://www.sitemaps.org/schemas/sitemap/0.9'
+urlnewsset: 'http://www.google.com/schemas/sitemap-news/0.9'
 short_date_format: true
 include_changefreq: true
 changefreq: daily

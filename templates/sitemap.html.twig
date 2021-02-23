@@ -1,0 +1,31 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+  {% set language = grav.language %}
+  {% set lang = language.enabled ? (language.active ?: language.default) : null %}
+  {% set count = 1 %}
+
+  <table class="sitemap">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>{{ 'PLUGIN_SITEMAP.TITLE_TITLE'|t }}</th>
+        <th>{{ 'PLUGIN_SITEMAP.TITLE_LOCATION'|t }}</th>
+        <th>{{ 'PLUGIN_SITEMAP.TITLE_LASTMOD'|t }}</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for entry in sitemap %}
+      {% if lang is null or entry.lang == lang %}
+        <tr>
+          <td>{{ count }}</td>
+          <td><a href="{{ entry.location }}">{{ entry.title ?: 'PLUGIN_SITEMAP.UNTITLED'|t }}</a></td>
+          <td><a href="{{ entry.location }}">{{ entry.location }}</a></td>
+          <td>{{ entry.lastmod }}</td>
+        </tr>
+        {% set count = count + 1 %}
+      {% endif %}
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

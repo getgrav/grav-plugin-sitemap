@@ -9,6 +9,7 @@ use Grav\Common\Language\Language;
 use Grav\Common\Page\Interfaces\PageInterface;
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
+use Grav\Common\Twig\Twig;
 use Grav\Common\Uri;
 use Grav\Common\Page\Pages;
 use Grav\Common\Utils;
@@ -26,6 +27,7 @@ class SitemapPlugin extends Plugin
 
     protected $multilang_skiplang_prefix = null;
     protected $multilang_include_fallbacks = false;
+    protected $multilang_enabled = true;
     protected $datetime_format = null;
     protected $include_change_freq = true;
     protected $default_change_freq = null;
@@ -101,10 +103,13 @@ class SitemapPlugin extends Plugin
         $this->sitemap = $cache->fetch($cache_id);
 
         if ($this->sitemap === false) {
+            $this->multilang_enabled = $this->config->get('plugins.sitemap.multilang_enabled');
+
             /** @var Language $language */
             $language = $this->grav['language'];
             $default_lang = $language->getDefault() ?: 'en';
-            $languages = $language->enabled() ? $language->getLanguages() : [$default_lang];
+            $active_lang = $language->getActive() ?? $default_lang;
+            $languages = $this->multilang_enabled && $language->enabled() ? $language->getLanguages() : [$default_lang];
 
             $this->multilang_skiplang_prefix = $this->config->get('system.languages.include_default_lang') ?  '' : $language->getDefault();
             $this->multilang_include_fallbacks = $this->config->get('system.languages.pages_fallback_only') || !empty($this->config->get('system.languages.content_fallback'));
@@ -119,12 +124,19 @@ class SitemapPlugin extends Plugin
             $this->ignore_protected = $this->config->get('plugins.sitemap.ignore_protected');
             $this->ignore_redirect = $this->config->get('plugins.sitemap.ignore_redirect');
 
-            // Gather data
+            // Gather data for all languages
             foreach ($languages as $lang) {
                 $language->init();
                 $language->setActive($lang);
                 $pages->reset();
                 $this->addRouteData($pages, $lang);
+            }
+
+            // Reset back to active language
+            if ($language->enabled() && $language->getActive() !== $active_lang) {
+                $language->init();
+                $language->setActive($active_lang);
+                $pages->reset();
             }
 
             // Build sitemap
@@ -166,7 +178,8 @@ class SitemapPlugin extends Plugin
         $route = $this->config->get('plugins.sitemap.route');
 
         if (is_null($page) || $page->route() !== $route) {
-            $extension = $this->grav['uri']->extension() ?? 'xml';
+            $html_support = $this->config->get('plugins.sitemap.html_support', false);
+            $extension = $this->grav['uri']->extension() ?? ($html_support ? 'html': 'xml');
 
             // set a dummy page
             $page = new Page;

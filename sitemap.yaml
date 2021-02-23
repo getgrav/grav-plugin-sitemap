@@ -5,6 +5,7 @@ ignore_protected: true
 ignore_redirect: true
 ignores:
 whitelist:
+html_support: false
 urlset: 'http://www.sitemaps.org/schemas/sitemap/0.9'
 short_date_format: true
 include_changefreq: true
@@ -12,3 +13,4 @@ changefreq: daily
 include_priority: true
 priority: !!float 1
 additions: []
+multilang_enabled: true

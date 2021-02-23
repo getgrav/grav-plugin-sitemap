@@ -1,3 +1,10 @@
+# v3.0.1
+## 02/23/2021
+
+1. [](#new)
+  * Added ability to disable multi-lang completely to replicate prior functionality [#96](https://github.com/getgrav/grav-plugin-sitemap/pull/96)
+  * Added support for new optional `html_support` option that allows you to render the sitemap as an HTML page in your site when you access the sitemap URL with no extension or `.html`. Can be customized and extended in your theme as needed.
+
 # v3.0.0
 ## 01/30/2021
 

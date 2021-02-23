@@ -30,11 +30,18 @@ en:
     IGNORE_REDIRECT_HELP: 'Ignores pages that have a custom "redirect" entry in the header'
     URLSET: 'URLSet'
     URLSET_HELP: 'The URLSet XML Namespace, don''t change this!'
+    MULTILANG_ENABLED: 'Multi-Lang Features'
+    MULTILANG_ENABLED_HELP: 'Enables support for multilanguage features'
     INCLUDE_CHANGEFREQ: 'Include Change Frequency'
     INCLUDE_PRIORITY: 'Include Priority'
     SHORT_DATE_FORMAT: 'Short Date Format'
     SHORT_DATE_FORMAT_HELP: 'Use Short or Long Date format'
-
+    HTML_SUPPORT: 'HTML Support'
+    HTML_SUPPORT_HELP: 'Use "sitemap.html.twig" if no extension or ".html" passed in the URL'
+    TITLE_LOCATION: 'Location'
+    TITLE_TITLE: 'Title'
+    TITLE_LASTMOD: 'Last Modified'
+    UNTITLED: 'Untitled'
 ru:
   PLUGIN_SITEMAP:
     SITEMAP: 'Карта сайта'
@@ -106,6 +113,8 @@ de:
     ADDITIONS_HELP: 'Füge externe URLs zur Sitemap hinzu'
     LOCATION: 'Seiten Pfad'
     LASTMOD: 'Letzte Änderung e.g. 2017-04-06'
+    MULTILANG_ENABLED: 'Mehrsprachigkeit'
+    MULTILANG_ENABLED_HELP: 'Aktiviert Funktionen zur Mehrsprachigkeit'
 
 zh:
   PLUGIN_SITEMAP:

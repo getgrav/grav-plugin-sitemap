@@ -30,6 +30,18 @@ form:
       validate:
         type: bool
 
+    multilang_enabled:
+      type: toggle
+      label: PLUGIN_SITEMAP.MULTILANG_ENABLED
+      help: PLUGIN_SITEMAP.MULTILANG_ENABLED_HELP
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
     ignore_external:
       type: toggle
       label: PLUGIN_SITEMAP.IGNORE_EXTERNAL

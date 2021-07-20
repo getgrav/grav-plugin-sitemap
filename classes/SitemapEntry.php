@@ -4,6 +4,7 @@ namespace Grav\Plugin\Sitemap;
 class SitemapEntry
 {
     public $title;
+    public $route;
     public $lang;
     public $translated = false;
     public $location;
@@ -80,6 +81,24 @@ class SitemapEntry
     public function setTitle($title): SitemapEntry
     {
         $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    /**
+     * @param mixed $route
+     * @return SitemapEntry
+     */
+    public function setRoute($route): SitemapEntry
+    {
+        $this->route = $route;
         return $this;
     }
 

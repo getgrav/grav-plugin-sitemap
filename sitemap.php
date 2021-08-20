@@ -284,7 +284,7 @@ class SitemapPlugin extends Plugin
                     'lang' => $lang,
                     'translated' => in_array($lang, $page_languages),
                     'location' => $location,
-                    'lastmod' => date($this->datetime_format, $page->modified()),
+                    'lastmod' => date($this->datetime_format, $page->date()),
                 ];
 
                 if ($this->include_change_freq) {

@@ -1,3 +1,11 @@
+# v3.0.2
+## 06/14/2022
+
+1. [](#new)
+   * Added new `route:` field to JSON format sitemap
+1. [](#bugfix)
+   * Fixed an issue with `x-default` entry not working with non-string based language code
+
 # v3.0.1
 ## 02/23/2021
 

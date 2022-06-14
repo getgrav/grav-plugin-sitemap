@@ -148,12 +148,12 @@ class SitemapPlugin extends Plugin
                         if ($language->enabled()) {
                             foreach ($route_data as $l => $l_data) {
                                 $entry->addHreflangs(['hreflang' => $l, 'href' => $l_data['location']]);
-                                if ($l === $default_lang) {
+                                if ($l == $default_lang) {
                                     $entry->addHreflangs(['hreflang' => 'x-default', 'href' => $l_data['location']]);
                                 }
                             }
                         }
-                        $this->sitemap[$data['route']] = $entry;
+                        $this->sitemap[$data['url']] = $entry;
                     }
                 }
             }
@@ -275,11 +275,12 @@ class SitemapPlugin extends Plugin
                 $page_languages = array_keys($page->translatedLanguages());
                 $include_lang = $this->multilang_skiplang_prefix !== $lang;
                 $location = $page->canonical($include_lang);
-                $page_route = $page->url(false, $include_lang);
+                $url = $page->url(false, $include_lang);
 
                 $lang_route = [
                     'title' => $page->title(),
-                    'route' => $page_route,
+                    'url' => $url,
+                    'route' => $route,
                     'lang' => $lang,
                     'translated' => in_array($lang, $page_languages),
                     'location' => $location,

@@ -1,5 +1,5 @@
 # v3.0.2
-## mm/dd/2021
+## 06/14/2022
 
 1. [](#new)
    * Added new `route:` field to JSON format sitemap

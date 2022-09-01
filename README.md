@@ -122,7 +122,7 @@ Note that Regex support is available: Just append `.*` to a path to ignore all o
 
 If you have some dynamic content being added to your site via another plugin, or perhaps a 3rd party API, you can now add them dynamically to the sitemap with a simple event:
 
-Make sure you are subscribed to the `` event then add simply add your entry to the sitemap like this:
+Make sure you are subscribed to the `onSitemapProcessed` event then add simply add your entry to the sitemap like this:
 
 ```php
     public function onSitemapProcessed(\RocketTheme\Toolbox\Event\Event $e)

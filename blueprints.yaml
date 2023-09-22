@@ -122,12 +122,26 @@ form:
       validate:
         type: bool
 
-
     urlnewsset:
       type: text
       default: 'http://www.google.com/schemas/sitemap-news/0.9'
       label: PLUGIN_SITEMAP.URLNEWSSET
       help: PLUGIN_SITEMAP.URLNEWSSET_HELP
+
+    news_max_age_days:
+      type: number
+      default: 2
+      size: x-small
+      label: PLUGIN_SITEMAP.NEWS_MAX_AGE_DAYS
+      append: Days
+      validate:
+        type: int
+
+    news_enabled_paths:
+      type: array
+      label: PLUGIN_SITEMAP.NEWS_TAG_PATHS
+      value_only: true
+      placeholder_value: '/news'
 
     short_date_format:
       type: toggle

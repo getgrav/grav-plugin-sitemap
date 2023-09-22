@@ -1,6 +1,6 @@
 # Grav Sitemap Plugin
 
-`Sitemap` is a [Grav](http://github.com/getgrav/grav) Plugin that generates a [map of your pages](http://en.wikipedia.org/wiki/Site_map) in `XML` format that is easily understandable and indexable by Search engines.
+`Sitemap` is a [Grav](https://github.com/getgrav/grav) Plugin that generates a [map of your pages](https://en.wikipedia.org/wiki/Site_map) in `XML` format that is easily understandable and indexable by Search engines.
 
 # Installation
 
@@ -8,7 +8,7 @@ Installing the Sitemap plugin can be done in one of two ways. Our GPM (Grav Pack
 
 ## GPM Installation (Preferred)
 
-The simplest way to install this plugin is via the [Grav Package Manager (GPM)](http://learn.getgrav.org/advanced/grav-gpm) through your system's Terminal (also called the command line).  From the root of your Grav install type:
+The simplest way to install this plugin is via the [Grav Package Manager (GPM)](https://learn.getgrav.org/advanced/grav-gpm) through your system's Terminal (also called the command line).  From the root of your Grav install type:
 
     bin/gpm install sitemap
 
@@ -16,13 +16,13 @@ This will install the Sitemap plugin into your `/user/plugins` directory within 
 
 ## Manual Installation
 
-To install this plugin, just download the zip version of this repository and unzip it under `/your/site/grav/user/plugins`. Then, rename the folder to `sitemap`. You can find these files either on [GitHub](https://github.com/getgrav/grav-plugin-sitemap) or via [GetGrav.org](http://getgrav.org/downloads/plugins#extras).
+To install this plugin, just download the zip version of this repository and unzip it under `/your/site/grav/user/plugins`. Then, rename the folder to `sitemap`. You can find these files either on [GitHub](https://github.com/getgrav/grav-plugin-sitemap) or via [GetGrav.org](https://getgrav.org/downloads/plugins#extras).
 
 You should now have all the plugin files under
 
     /your/site/grav/user/plugins/sitemap
 
->> NOTE: This plugin is a modular component for Grav which requires [Grav](http://github.com/getgrav/grav), the [Error](https://github.com/getgrav/grav-plugin-error) and [Problems](https://github.com/getgrav/grav-plugin-problems) plugins, and a theme to be installed in order to operate.
+>> NOTE: This plugin is a modular component for Grav which requires [Grav](https://github.com/getgrav/grav), the [Error](https://github.com/getgrav/grav-plugin-error) and [Problems](https://github.com/getgrav/grav-plugin-problems) plugins, and a theme to be installed in order to operate.
 
 
 # Usage
@@ -31,7 +31,7 @@ The `sitemap` plugin works out of the box. You can just go directly to `http://y
 
 ## Config Defaults
 
-```
+```yaml
 enabled: true
 route: '/sitemap'
 ignore_external: true
@@ -41,9 +41,14 @@ ignores:
   - /blog/blog-post-to-ignore
   - /ignore-this-route
   - /ignore-children-of-this-route/.*
+include_news_tags: false
+news_max_age_days: 2
+news_enabled_paths:
+  - /blog
 whitelist:
 html_support: false
 urlset: 'http://www.sitemaps.org/schemas/sitemap/0.9'
+urlnewsset: 'http://www.google.com/schemas/sitemap-news/0.9'
 short_date_format: true
 include_changefreq: true
 changefreq: daily
@@ -64,7 +69,7 @@ additions:
 
 You can ignore your own pages by providing a list of routes to ignore. You can also use a page's Frontmatter to signal that the sitemap should ignore it:
 
-```
+```yaml
 sitemap:
     ignore: true
 ```
@@ -75,11 +80,17 @@ The latest Sitemap `v3.0` includes all new multi-language support utilizing the 
 
 This is handled automatically based on your Grav multi-language System configuration.
 
+### News Support
+
+New in version 4.0 of the plugin is support for Google's [**News Sitemap Extension**](https://developers.google.com/search/docs/crawling-indexing/sitemaps/news-sitemap) that uses a specific tags under a `<news:news></news:news>` tag to provide Google News specific data.  When enabled, the news extensions will be enabled when an item is in one of the configured news paths (`/` by default, so all), and if the published date is not older than the configured `max age` (default of 2 per Googles recommendations).
+
+The output of the news tags is controlled by an overridable `sitemap-extensions/news.html.twig` template
+
 ## Images
 
 You can add images to the sitemap by adding an entry in the page's Frontmatter.
 
-```
+```yaml
 sitemap:
     images:
         your_image:
@@ -108,7 +119,7 @@ You can copy and extend this Twig template in your theme to customize it for you
 
 You can manually add URLs to the sitemap using the Admin settings, or by adding entries to your `sitemap.yaml` with this format:
 
-```
+```yaml
 additions:
   -
     location: /something-special
@@ -122,7 +133,7 @@ Note that Regex support is available: Just append `.*` to a path to ignore all o
 
 If you have some dynamic content being added to your site via another plugin, or perhaps a 3rd party API, you can now add them dynamically to the sitemap with a simple event:
 
-Make sure you are subscribed to the `` event then add simply add your entry to the sitemap like this:
+Make sure you are subscribed to the `onSitemapProcessed` event then add simply add your entry to the sitemap like this:
 
 ```php
     public function onSitemapProcessed(\RocketTheme\Toolbox\Event\Event $e)

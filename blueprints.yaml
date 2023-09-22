@@ -1,7 +1,7 @@
 name: Sitemap
 type: plugin
 slug: sitemap
-version: 3.0.2
+version: 4.0.0
 description: "Provide automatically generated **XML sitemaps** with this very useful, but simple to configure, Grav plugin."
 icon: map-marker
 author:
@@ -109,6 +109,39 @@ form:
       default: 'http://www.sitemaps.org/schemas/sitemap/0.9'
       label: PLUGIN_SITEMAP.URLSET
       help: PLUGIN_SITEMAP.URLSET_HELP
+
+    include_news_tags:
+      type: toggle
+      label: PLUGIN_SITEMAP.INCLUDE_NEWS_TAGS
+      help: PLUGIN_SITEMAP.INCLUDE_NEWS_TAGS_HELP
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    urlnewsset:
+      type: text
+      default: 'http://www.google.com/schemas/sitemap-news/0.9'
+      label: PLUGIN_SITEMAP.URLNEWSSET
+      help: PLUGIN_SITEMAP.URLNEWSSET_HELP
+
+    news_max_age_days:
+      type: number
+      default: 2
+      size: x-small
+      label: PLUGIN_SITEMAP.NEWS_MAX_AGE_DAYS
+      append: Days
+      validate:
+        type: int
+
+    news_enabled_paths:
+      type: array
+      label: PLUGIN_SITEMAP.NEWS_TAG_PATHS
+      value_only: true
+      placeholder_value: '/news'
 
     short_date_format:
       type: toggle

@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="{{ uri.rootUrl }}/user/plugins/sitemap/sitemap.xsl"?>
 <urlset xmlns="{{ config.plugins.sitemap.urlset }}"
+      {% if config.plugins.sitemap.include_news_tags %}
+        xmlns:news="{{ config.plugins.sitemap.urlnewsset }}"
+      {% endif %}
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 {% for entry in sitemap %}
   <url>
     <loc>{{ entry.location|e }}</loc>
+  {% if config.plugins.sitemap.include_news_tags and
+        timestamp_within_days(entry.timestamp, config.plugin.sitemap.news_max_age_days|default(2)) and
+        entry.rawroute|starts_with(config.plugins.sitemap.news_enabled_paths)
+  %}
+    {% include 'sitemap-extensions/news.html.twig' %}
+  {% endif %}
   {% for hreflang in entry.hreflangs %}
     <xhtml:link rel="alternate" hreflang="{{ hreflang.hreflang }}" href="{{ hreflang.href }}" />
   {% endfor %}

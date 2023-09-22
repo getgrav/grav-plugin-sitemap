@@ -1,3 +1,12 @@
+# v4.0.0
+## 09/22/2023
+
+1. [](#new)
+   * Added support for Google News tags [#93](https://github.com/getgrav/grav-plugin-sitemap/pull/93)
+   * Enhanced Google News to allow restriction to paths and configurable max-age in days
+1. [](#improved)
+   * Added YAML syntax highlighting in README.md [#101](https://github.com/getgrav/grav-plugin-sitemap/pull/101)
+
 # v3.0.2
 ## 06/14/2022
 

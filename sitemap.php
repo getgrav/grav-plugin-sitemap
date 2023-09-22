@@ -198,6 +198,9 @@ class SitemapPlugin extends Plugin
         $this->grav['twig']->twig()->addFunction(
             new TwigFunction('sort_sitemap_entries_by_language', [$this, 'sortSitemapEntriesByLanguage'])
         );
+        $this->grav['twig']->twig()->addFunction(
+            new TwigFunction('timestamp_within_days', [$this, 'timestampWithinDays'])
+        );
     }
 
     /**
@@ -255,6 +258,13 @@ class SitemapPlugin extends Plugin
         return $entries;
     }
 
+    public function timestampWithinDays(int $timestamp, int $days): bool
+    {
+        $now = time();
+        $days_ago = $now - ($days * 24 * 60 * 60);
+        return $timestamp >= $days_ago;
+    }
+
     protected function addRouteData($pages, $lang)
     {
         $routes = array_unique($pages->routes());
@@ -285,6 +295,10 @@ class SitemapPlugin extends Plugin
                     'translated' => in_array($lang, $page_languages),
                     'location' => $location,
                     'lastmod' => date($this->datetime_format, $page->modified()),
+                    'longdate' => date('Y-m-d\TH:i:sP', $page->date()),
+                    'shortdate' => date('Y-m-d', $page->date()),
+                    'timestamp' => $page->date(),
+                    'rawroute' => $page->rawRoute(),
                 ];
 
                 if ($this->include_change_freq) {

@@ -33,6 +33,8 @@ en:
     URLNEWSSET: 'URLNewsSet'
     URLNEWSSET_HELP: 'The URLNewsSet XML Namespace, don''t change this!'
     INCLUDE_NEWS_TAGS: 'Include News Tags'
+    NEWS_MAX_AGE_DAYS: 'News Max Age (Days)'
+    NEWS_TAG_PATHS: 'News Tag Paths'
     MULTILANG_ENABLED: 'Multi-Lang Features'
     MULTILANG_ENABLED_HELP: 'Enables support for multilanguage features'
     INCLUDE_CHANGEFREQ: 'Include Change Frequency'

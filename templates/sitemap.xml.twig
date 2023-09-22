@@ -9,17 +9,11 @@
 {% for entry in sitemap %}
   <url>
     <loc>{{ entry.location|e }}</loc>
-  {% if config.plugins.sitemap.include_news_tags %}
-    <news:news>
-      <news:publication>
-        <news:name>{{ site.title }}</news:name>
-        <news:language>{{ site.default_lang }}</news:language>
-      </news:publication>
-    {% if entry.lastmod %}
-      <news:publication_date>{{ entry.lastmod }}</news:publication_date>
-    {% endif %}
-      <news:title>{{ entry.title }}</news:title>
-    </news:news>
+  {% if config.plugins.sitemap.include_news_tags and
+        timestamp_within_days(entry.timestamp, config.plugin.sitemap.news_max_age_days|default(2)) and
+        entry.rawroute|starts_with(config.plugins.sitemap.news_enabled_paths)
+  %}
+    {% include 'sitemap-extensions/news.html.twig' %}
   {% endif %}
   {% for hreflang in entry.hreflangs %}
     <xhtml:link rel="alternate" hreflang="{{ hreflang.hreflang }}" href="{{ hreflang.href }}" />

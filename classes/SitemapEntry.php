@@ -14,6 +14,11 @@ class SitemapEntry
     public $images;
     public $hreflangs = [];
 
+    public int $timestamp;
+    public string $rawroute;
+    public string $longdate;
+    public string $shortdate;
+
     /**
      * SitemapEntry constructor.
      *
@@ -258,5 +263,44 @@ class SitemapEntry
         return $this;
     }
 
+    public function getTimestamp(): int
+    {
+        return $this->timestamp;
+    }
+
+    public function setTimestamp(int $timestamp): void
+    {
+        $this->timestamp = $timestamp;
+    }
+
+    public function getRawroute(): string
+    {
+        return $this->rawroute;
+    }
+
+    public function setRawroute(string $rawroute): void
+    {
+        $this->rawroute = $rawroute;
+    }
+
+    public function getLongdate(): string
+    {
+        return $this->longdate;
+    }
+
+    public function setLongdate(string $longdate): void
+    {
+        $this->longdate = $longdate;
+    }
+
+    public function getShortdate(): string
+    {
+        return $this->shortdate;
+    }
+
+    public function setShortdate(string $shortdate): void
+    {
+        $this->shortdate = $shortdate;
+    }
 
 }

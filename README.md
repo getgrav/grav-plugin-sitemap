@@ -41,9 +41,14 @@ ignores:
   - /blog/blog-post-to-ignore
   - /ignore-this-route
   - /ignore-children-of-this-route/.*
+include_news_tags: false
+news_max_age_days: 2
+news_enabled_paths:
+  - /blog
 whitelist:
 html_support: false
 urlset: 'http://www.sitemaps.org/schemas/sitemap/0.9'
+urlnewsset: 'http://www.google.com/schemas/sitemap-news/0.9'
 short_date_format: true
 include_changefreq: true
 changefreq: daily
@@ -74,6 +79,12 @@ sitemap:
 The latest Sitemap `v3.0` includes all new multi-language support utilizing the latest [Google Search SEO Recomendations](https://developers.google.com/search/docs/advanced/crawling/localized-versions?hl=en&visit_id=637468720624267418-280936473&rd=2) which creates bi-directional `hreflang` entries for each language available.
 
 This is handled automatically based on your Grav multi-language System configuration.
+
+### News Support
+
+New in version 4.0 of the plugin is support for Google's [**News Sitemap Extension**](https://developers.google.com/search/docs/crawling-indexing/sitemaps/news-sitemap) that uses a specific tags under a `<news:news></news:news>` tag to provide Google News specific data.  When enabled, the news extensions will be enabled when an item is in one of the configured news paths (`/` by default, so all), and if the published date is not older than the configured `max age` (default of 2 per Googles recommendations).
+
+The output of the news tags is controlled by an overridable `sitemap-extensions/news.html.twig` template
 
 ## Images
 

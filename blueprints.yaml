@@ -122,6 +122,7 @@ form:
       validate:
         type: bool
 
+
     urlnewsset:
       type: text
       default: 'http://www.google.com/schemas/sitemap-news/0.9'

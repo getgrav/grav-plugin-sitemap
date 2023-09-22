@@ -15,3 +15,4 @@ changefreq: daily
 include_priority: true
 priority: !!float 1
 additions: []
+multilang_enabled: true

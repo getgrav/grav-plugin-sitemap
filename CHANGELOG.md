@@ -1,3 +1,9 @@
+# v4.0.1
+## mm/dd/2023
+
+1. [](#new)
+   * Added a toggle for XSL transform support to be disabled
+
 # v4.0.0
 ## 09/22/2023
 

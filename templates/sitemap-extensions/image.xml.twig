@@ -1,0 +1,17 @@
+<image:image>
+{% if image.loc %}
+  <image:loc>{{ url(image.loc, true) }}</image:loc>
+{% endif %}
+{% if image.caption %}
+  <image:caption>{{ image.caption }}</image:caption>
+{% endif %}
+{% if image.geoloc %}
+  <image:geo_location>{{ image.geoloc }}</image:geo_location>
+{% endif %}
+{% if image.title %}
+  <image:title>{{ image.title }}</image:title>
+{% endif %}
+{% if image.license %}
+  <image:license>{{ image.license }}</image:license>
+{% endif %}
+</image:image>

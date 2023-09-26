@@ -92,6 +92,18 @@ form:
       validate:
         pattern: "/([a-z-_]+/?)+"
 
+    xsl_transform:
+      type: toggle
+      label: PLUGIN_SITEMAP.XSL_TRANSFORM
+      help: PLUGIN_SITEMAP.XSL_TRANSFORM_HELP
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
     html_support:
       type: toggle
       label: PLUGIN_SITEMAP.HTML_SUPPORT
@@ -109,6 +121,12 @@ form:
       default: 'http://www.sitemaps.org/schemas/sitemap/0.9'
       label: PLUGIN_SITEMAP.URLSET
       help: PLUGIN_SITEMAP.URLSET_HELP
+
+    urlimageset:
+        type: text
+        default: 'http://www.google.com/schemas/sitemap-image/1.1'
+        label: PLUGIN_SITEMAP.URLIMAGESET
+        help: PLUGIN_SITEMAP.URLIMAGESET_HELP
 
     include_news_tags:
       type: toggle
@@ -143,17 +161,14 @@ form:
       value_only: true
       placeholder_value: '/news'
 
-    short_date_format:
-      type: toggle
-      label: PLUGIN_ADMIN.SHORT_DATE_FORMAT
-      help: PLUGIN_ADMIN.SHORT_DATE_FORMAT_HELP
-      highlight: 1
-      default: 0
+    date_type:
+      type: select
+      label: PLUGIN_SITEMAP.DATE_TYPE
+      default: page_date
+      size: medium
       options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
+          page_date: PLUGIN_SITEMAP.DATE_TYPE_PAGE_DATE
+          last_modified: PLUGIN_SITEMAP.DATE_TYPE_LAST_MODIFIED
 
     include_changefreq:
       type: toggle

@@ -9,9 +9,11 @@ news_enabled_paths:
   - /blog
 ignores:
 whitelist:
+xsl_transform: true
 html_support: false
 urlset: 'http://www.sitemaps.org/schemas/sitemap/0.9'
 urlnewsset: 'http://www.google.com/schemas/sitemap-news/0.9'
+urlimageset: 'http://www.google.com/schemas/sitemap-image/1.1'
 short_date_format: true
 include_changefreq: true
 changefreq: daily

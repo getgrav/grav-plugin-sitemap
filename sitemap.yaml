@@ -4,6 +4,7 @@ ignore_external: true
 ignore_protected: true
 ignore_redirect: true
 include_news_tags: false
+standalone_sitemap_news: false
 news_max_age_days: 2
 news_enabled_paths:
   - /blog

@@ -75,12 +75,11 @@ class SitemapPlugin extends Plugin
         /** @var Uri $uri */
         $uri = $this->grav['uri'];
         $route = $this->config()['route'];
-        $news_route = str_replace($this->config()['news_route_suffix'], '', $uri->route());
 
         if ($route && ($route == $uri->route() ||
                 ($uri->extension() === 'xml' &&
                  $this->config()['include_news_tags'] &&
-                 in_array($news_route, $this->config()['news_enabled_paths'])))
+                 in_array($uri->route(), $this->config()['news_enabled_paths'])))
         ) {
 
             $this->enable([

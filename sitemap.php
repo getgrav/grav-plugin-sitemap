@@ -38,6 +38,8 @@ class SitemapPlugin extends Plugin
     protected $ignore_protected = true;
     protected $ignore_redirect = true;
 
+    protected $news_route = null;
+
     /**
      * @return array
      */
@@ -75,12 +77,18 @@ class SitemapPlugin extends Plugin
         /** @var Uri $uri */
         $uri = $this->grav['uri'];
         $route = $this->config()['route'];
+        $uri_route = $uri->route();
+        $news_page = false;
 
-        if ($route && ($route == $uri->route() ||
-                ($uri->extension() === 'xml' &&
-                 $this->config()['include_news_tags'] &&
-                 in_array($uri->route(), $this->config()['news_enabled_paths'])))
-        ) {
+        if ($this->config()['include_news_tags'] &&
+            $this->config()['standalone_sitemap_news'] &&
+            Utils::endsWith($uri->uri(), $this->config()['sitemap_news_path']) &&
+            in_array(dirname($uri->route()), $this->config()['news_enabled_paths'])) {
+            $this->news_route = dirname($uri->route());
+        }
+
+
+        if ($route === $uri->route() || !empty($this->news_route)) {
 
             $this->enable([
                 'onTwigInitialized' => ['onTwigInitialized', 0],
@@ -184,7 +192,7 @@ class SitemapPlugin extends Plugin
         $html_support = $this->config->get('plugins.sitemap.html_support', false);
         $extension = $this->grav['uri']->extension() ?? ($html_support ? 'html': 'xml');
 
-        if (is_null($page) || $uri->route() === $route) {
+        if (is_null($page) || $uri->route() === $route || !empty($this->news_route)) {
 
             // set a dummy page
             $page = new Page;
@@ -193,15 +201,16 @@ class SitemapPlugin extends Plugin
             unset($this->grav['page']);
             $this->grav['page'] = $page;
             $twig = $this->grav['twig'];
-            $twig->template = "sitemap.$extension.twig";
-        } elseif (
-            $extension === 'xml' &&
-            $this->config()['include_news_tags'] &&
-            $this->config()['standalone_sitemap_news'] &&
-            in_array($uri->route(), $this->config()['news_enabled_paths'] )) {
-            $extension = $this->grav['uri']->extension();
-            $twig = $this->grav['twig'];
-            $twig->template = "sitemap-news.$extension.twig";
+
+            if (!empty($this->news_route)) {
+                $header = $page->header();
+                $header->sitemap['news_route'] = $this->news_route;
+                $page->header($header);
+                $twig->template = "sitemap-news.$extension.twig";
+            } else {
+                $twig->template = "sitemap.$extension.twig";
+            }
+
         }
     }
 

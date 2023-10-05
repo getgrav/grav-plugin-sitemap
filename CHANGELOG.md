@@ -1,5 +1,5 @@
 # v5.0.0
-## mm/dd/2023
+## 10/05/2023
 
 1. [](#new)
    * New capability to support "standalone" Sitemap News pages

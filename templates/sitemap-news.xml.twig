@@ -1,0 +1,19 @@
+{% set sitemap_config = page.header.sitemap %}
+<?xml version="1.0" encoding="UTF-8"?>
+{% if config.plugins.sitemap.xsl_transform %}
+<?xml-stylesheet type="text/xsl" href="{{ uri.rootUrl }}/user/plugins/sitemap/sitemap-news.xsl"?>
+{% endif %}
+<urlset
+  xmlns="{{ config.plugins.sitemap.urlset }}"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:news="{{ config.plugins.sitemap.urlnewsset }}">
+{% for entry in sitemap %}
+  {% if timestamp_within_days(entry.timestamp, config.plugin.sitemap.news_max_age_days|default(2)) and
+        entry.rawroute|starts_with(sitemap_config.news_route ~ '/') %}
+    <url>
+      <loc>{{ entry.location|e }}</loc>
+      {% include 'sitemap-extensions/news.xml.twig' %}
+    </url>
+  {% endif %}
+{% endfor %}
+</urlset>

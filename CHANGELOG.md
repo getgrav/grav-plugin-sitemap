@@ -1,3 +1,16 @@
+# v5.0.0
+## 10/05/2023
+
+1. [](#new)
+   * New capability to support "standalone" Sitemap News pages
+   * New XSL format for Sitemap News
+   * Added a toggle for XSL transform support to be disabled
+1. [](#improved)
+   * Improved blueprint and created sections
+   * Hide `x-default` alternate links when `include_default_lang` is enabled
+1. [](#bugfix)
+   * Fixed an issue with translated links were not being handled properly and not showing all alternate languages
+   
 # v4.0.0
 ## 09/22/2023
 

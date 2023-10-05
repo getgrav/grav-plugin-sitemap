@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
+{% if config.plugins.sitemap.xsl_transform %}
 <?xml-stylesheet type="text/xsl" href="{{ uri.rootUrl }}/user/plugins/sitemap/sitemap.xsl"?>
-<urlset xmlns="{{ config.plugins.sitemap.urlset }}"
-      {% if config.plugins.sitemap.include_news_tags %}
-        xmlns:news="{{ config.plugins.sitemap.urlnewsset }}"
-      {% endif %}
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+{% endif %}
+<urlset
+  xmlns="{{ config.plugins.sitemap.urlset }}"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:image="{{ config.plugins.sitemap.urlimageset }}"
+{% if config.plugins.sitemap.include_news_tags %}
+  xmlns:news="{{ config.plugins.sitemap.urlnewsset }}"
+{% endif %}>
 {% for entry in sitemap %}
   <url>
     <loc>{{ entry.location|e }}</loc>
   {% if config.plugins.sitemap.include_news_tags and
+        config.plugins.sitemap.standalone_sitemap_news == false and
         timestamp_within_days(entry.timestamp, config.plugin.sitemap.news_max_age_days|default(2)) and
         entry.rawroute|starts_with(config.plugins.sitemap.news_enabled_paths)
   %}
-    {% include 'sitemap-extensions/news.html.twig' %}
+    {% include 'sitemap-extensions/news.xml.twig' %}
   {% endif %}
   {% for hreflang in entry.hreflangs %}
     <xhtml:link rel="alternate" hreflang="{{ hreflang.hreflang }}" href="{{ hreflang.href }}" />
@@ -28,23 +32,7 @@
     <priority>{{ entry.priority|number_format(1) }}</priority>
   {% endif %}
   {% for image in entry.images %}
-    <image:image>
-    {% if image.loc %}
-      <image:loc>{{ url(image.loc, true) }}</image:loc>
-    {% endif %}
-    {% if image.caption %}
-      <image:caption>{{ image.caption }}</image:caption>
-    {% endif %}
-    {% if image.geoloc %}
-      <image:geo_location>{{ image.geoloc }}</image:geo_location>
-    {% endif %}
-    {% if image.title %}
-      <image:title>{{ image.title }}</image:title>
-    {% endif %}
-    {% if image.license %}
-      <image:license>{{ image.license }}</image:license>
-    {% endif %}
-    </image:image>
+    {% include 'sitemap-extensions/image.xml.twig' %}
   {% endfor %}
   </url>
 {% endfor %}

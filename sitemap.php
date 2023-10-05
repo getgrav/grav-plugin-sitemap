@@ -112,7 +112,7 @@ class SitemapPlugin extends Plugin
         $pages = $this->grav['pages'];
 
         $cache_id = md5('sitemap-data-'.$pages->getPagesCacheId());
-        $this->sitemap = $cache->fetch($cache_id);
+//        $this->sitemap = $cache->fetch($cache_id);
 
         if ($this->sitemap === false) {
             $this->multilang_enabled = $this->config->get('plugins.sitemap.multilang_enabled');
@@ -122,6 +122,7 @@ class SitemapPlugin extends Plugin
             $default_lang = $language->getDefault() ?: 'en';
             $active_lang = $language->getActive() ?? $default_lang;
             $languages = $this->multilang_enabled && $language->enabled() ? $language->getLanguages() : [$default_lang];
+            $include_default_lang = $this->config->get('system.languages.include_default_lang');
 
             $this->multilang_skiplang_prefix = $this->config->get('system.languages.include_default_lang') ?  '' : $language->getDefault();
             $this->multilang_include_fallbacks = $this->config->get('system.languages.pages_fallback_only') || !empty($this->config->get('system.languages.content_fallback'));
@@ -160,7 +161,7 @@ class SitemapPlugin extends Plugin
                         if ($language->enabled()) {
                             foreach ($route_data as $l => $l_data) {
                                 $entry->addHreflangs(['hreflang' => $l, 'href' => $l_data['location']]);
-                                if ($l == $default_lang) {
+                                if ($include_default_lang === false && $l == $default_lang) {
                                     $entry->addHreflangs(['hreflang' => 'x-default', 'href' => $l_data['location']]);
                                 }
                             }
@@ -296,6 +297,7 @@ class SitemapPlugin extends Plugin
             /** @var PageInterface $page */
             $page = $pages->get($path);
 
+            $rawroute = $page->rawRoute();
             $header = $page->header();
             $external_url = $this->ignore_external ? isset($header->external_url) : false;
             $protected_page = $this->ignore_protected ? isset($header->access) : false;
@@ -346,7 +348,7 @@ class SitemapPlugin extends Plugin
 
 
 
-                $this->route_data[$route][$lang] = $lang_route;
+                $this->route_data[$rawroute][$lang] = $lang_route;
             }
         }
     }

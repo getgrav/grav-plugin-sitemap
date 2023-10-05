@@ -79,15 +79,16 @@
                             <th colspan="5">News Sitemap</th>
                         </tr>
                         <tr>
-                            <th width="45%">Title</th>
-                            <th width="35%">title</th>
-                            <th width="20%">Publication Date</th>
+                            <th width="45%">loc</th>
+                            <th width="35%">news:title</th>
+                            <th width="20%">news:publication_date</th>
                         </tr>
                     </thead>
                     <tfoot>
                     </tfoot>
                     <tbody>
                         <xsl:for-each select="s:urlset/s:url">
+                            <xsl:sort select="n:news/n:publication_date" order="descending" data-type="text"/>
                             <tr>
                                 <td>
                                     <xsl:variable name="itemURL">

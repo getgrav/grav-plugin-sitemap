@@ -1,8 +1,11 @@
-# v4.0.1
+# v4.1.0
 ## mm/dd/2023
 
 1. [](#new)
+   * New capability to support "standalone" Sitemap News pages
    * Added a toggle for XSL transform support to be disabled
+1. [](#improved)
+   * Improved blueprint and created sections
 
 # v4.0.0
 ## 09/22/2023

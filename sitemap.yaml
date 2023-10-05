@@ -5,6 +5,7 @@ ignore_protected: true
 ignore_redirect: true
 include_news_tags: false
 standalone_sitemap_news: false
+sitemap_news_path: '/sitemap-news.xml'
 news_max_age_days: 2
 news_enabled_paths:
   - /blog

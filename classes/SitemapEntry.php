@@ -14,10 +14,10 @@ class SitemapEntry
     public $images;
     public $hreflangs = [];
 
-    public int $timestamp;
-    public string $rawroute;
-    public string $longdate;
-    public string $shortdate;
+    public $timestamp;
+    public $rawroute;
+    public $longdate;
+    public $shortdate;
 
     /**
      * SitemapEntry constructor.

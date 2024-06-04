@@ -25,6 +25,11 @@ form:
                     type: bool
                     required: false
 
+                header.sitemap.lastmod:
+                  type: datetime
+                  label: PLUGIN_SITEMAP.HEADER_LASTMOD
+                  default: ''
+
                 header.sitemap.changefreq:
                   type: select
                   label: PLUGIN_SITEMAP.HEADER_CHANGEFREQ

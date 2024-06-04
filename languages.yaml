@@ -2,6 +2,7 @@ en:
   PLUGIN_SITEMAP:
     SITEMAP: 'Sitemap'
     HEADER_IGNORE: 'Sitemap ignore page'
+    HEADER_LASTMOD: 'Sitemap Last Modified'
     HEADER_CHANGEFREQ: 'Sitemap Change Frequency'
     HEADER_PRIORITY: 'Sitemap priority'
     CHANGEFREQ: 'Global - Sitemap Change Frequency'

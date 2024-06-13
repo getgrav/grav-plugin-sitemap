@@ -310,7 +310,7 @@ class SitemapPlugin extends Plugin
                 $include_lang = $this->multilang_skiplang_prefix !== $lang;
                 $location = $page->canonical($include_lang);
                 $url = $page->url(false, $include_lang);
-				$lastmod = isset($header->sitemap['lastmod']) ? strtotime($header->sitemap['lastmod']) : $page->modified();
+                $lastmod = !empty($header->sitemap['lastmod']) ? strtotime($header->sitemap['lastmod']) : $page->modified();
 
                 $lang_route = [
                     'title' => $page->title(),

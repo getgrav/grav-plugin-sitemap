@@ -322,7 +322,7 @@ class SitemapPlugin extends Plugin
                     'lastmod' => date($this->datetime_format, $lastmod),
                     'longdate' => date('Y-m-d\TH:i:sP', $page->date()),
                     'shortdate' => date('Y-m-d', $page->date()),
-                    'timestamp' => $page->date(),
+                    'timestamp' => intval($page->date()),
                     'rawroute' => $page->rawRoute(),
                 ];
 

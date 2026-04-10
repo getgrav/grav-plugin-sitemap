@@ -36,7 +36,7 @@ form:
       label: PLUGIN_SITEMAP.ROUTE
       placeholder: /sitemap
       validate:
-        pattern: "/([a-z-_]+/?)+"
+        pattern: '/([a-z\-_]+/?)+'
 
     multilang_enabled:
       type: toggle

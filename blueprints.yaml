@@ -1,20 +1,20 @@
 name: Sitemap
 type: plugin
 slug: sitemap
-version: 5.1.0
+version: 5.2.0
 description: "Provide automatically generated **XML sitemaps** with this very useful, as a simple to configure Grav plugin."
 icon: map-marker
 author:
   name: Team Grav
   email: devs@getgrav.org
-  url: http://getgrav.org
+  url: https://getgrav.org
 homepage: https://github.com/getgrav/grav-plugin-sitemap
 keywords: sitemap, plugin, xml, map, index
 bugs: https://github.com/getgrav/grav-plugin-sitemap/issues
 license: MIT
 
 dependencies:
-    - { name: grav, version: '>=1.6.0' }
+    - { name: grav, version: '>=1.7.0' }
 
 form:
   validation: strict
@@ -36,7 +36,7 @@ form:
       label: PLUGIN_SITEMAP.ROUTE
       placeholder: /sitemap
       validate:
-        pattern: "/([a-z-_]+/?)+"
+        pattern: "/([a-z_-]+/?)+"
 
     multilang_enabled:
       type: toggle

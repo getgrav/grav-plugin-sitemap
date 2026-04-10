@@ -1,3 +1,14 @@
+# v5.2.0
+## 04/10/26
+
+1. [](#improved)
+   * Bumped minimum requirements to PHP 7.4 and Grav 1.7 [#119](https://github.com/getgrav/grav-plugin-sitemap/pull/119)
+   * Switched `getgrav.org` references to HTTPS [#117](https://github.com/getgrav/grav-plugin-sitemap/pull/117)
+   * Fixed typo in README.md [#118](https://github.com/getgrav/grav-plugin-sitemap/pull/118)
+1. [](#bugfix)
+   * Fixed HTML pattern character class escaping for `v` flag compatibility in admin blueprint [#120](https://github.com/getgrav/grav-plugin-sitemap/pull/120)
+   * Cast page `timestamp` to integer in sitemap data to avoid type issues with non-int date values
+
 # v5.1.0
 ## 06/17/24
 

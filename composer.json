@@ -9,12 +9,12 @@
     {
       "name": "Team Grav",
       "email": "devs@getgrav.org",
-      "homepage": "http://getgrav.org",
+      "homepage": "https://getgrav.org",
       "role": "Developer"
     }
   ],
   "require": {
-    "php": ">=7.1.3"
+    "php": ">=7.4"
   },
   "autoload": {
     "psr-4": {
@@ -24,7 +24,7 @@
   },
   "config": {
     "platform": {
-      "php": "7.1.3"
+      "php": "7.4.33"
     }
   }
 }

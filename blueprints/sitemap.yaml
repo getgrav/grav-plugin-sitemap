@@ -27,8 +27,8 @@ form:
 
                 header.sitemap.lastmod:
                   type: datetime
+                  toggleable: true
                   label: PLUGIN_SITEMAP.HEADER_LASTMOD
-                  default: ''
 
                 header.sitemap.changefreq:
                   type: select

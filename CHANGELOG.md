@@ -1,5 +1,5 @@
 # v5.2.2
-## 08/10/2026
+## 08/11/2026
 
 1. [](#bugfix)
     * Fixed the page-level `Sitemap Last Modified` field being saved with the current date even when it was never set [#121](https://github.com/getgrav/grav-plugin-sitemap/issues/121)

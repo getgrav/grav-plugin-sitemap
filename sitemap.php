@@ -111,9 +111,31 @@ class SitemapPlugin extends Plugin
         /** @var Pages $pages */
         $pages = $this->grav['pages'];
 
-        $cache_id = md5('sitemap-data-'.$pages->getPagesCacheId());
-//        $this->sitemap = $cache->fetch($cache_id);
+        // The cache key covers everything that decides what the sitemap
+        // contains, not just the pages.
+        //
+        // `getPagesCacheId()` alone was not enough, and that is why the fetch
+        // below spent a while commented out: this method reads a dozen of the
+        // plugin's own settings and four of Grav's language settings, and bakes
+        // the configured `additions` straight into the result. Keyed on the
+        // pages alone, changing `ignores`, `changefreq`, `priority`,
+        // `multilang_enabled` or adding an extra URL kept serving the old
+        // sitemap until something in pages/ happened to change, which is
+        // indistinguishable from the setting not working.
+        $cache_id = md5('sitemap-data-' . $pages->getPagesCacheId() . serialize([
+            $this->config->get('plugins.sitemap'),
+            $this->config->get('system.languages.supported'),
+            $this->config->get('system.languages.include_default_lang'),
+            $this->config->get('system.languages.pages_fallback_only'),
+            $this->config->get('system.languages.content_fallback'),
+        ]));
 
+        $this->sitemap = $cache->fetch($cache_id);
+
+        // Everything the build sets on $this — the date format, the ignore
+        // rules, the changefreq and priority defaults, the language prefixes —
+        // is read only by addRouteData(), which is only called from inside this
+        // branch. A cache hit skipping them is safe.
         if ($this->sitemap === false) {
             $this->multilang_enabled = $this->config->get('plugins.sitemap.multilang_enabled');
 

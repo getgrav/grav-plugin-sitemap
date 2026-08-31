@@ -1,3 +1,10 @@
+# v5.2.3
+## 08/31/2026
+
+1. [](#bugfix)
+    * Fixed the sitemap cache never being read, so every request rebuilt the entire sitemap from scratch
+    * Fixed sitemap settings changes not taking effect until a page was edited
+
 # v5.2.2
 ## 08/11/2026
 

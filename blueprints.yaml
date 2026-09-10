@@ -1,7 +1,7 @@
 name: Sitemap
 type: plugin
 slug: sitemap
-version: 5.2.3
+version: 5.3.0
 description: "Provide automatically generated **XML sitemaps** with this very useful, as a simple to configure Grav plugin."
 icon: map-marker
 author:
@@ -112,6 +112,37 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+
+    llms_section:
+      type: section
+      title: PLUGIN_SITEMAP.LLMS_SECTION
+      underline: true
+
+      fields:
+
+        llms_txt:
+          type: toggle
+          label: PLUGIN_SITEMAP.LLMS_TXT
+          help: PLUGIN_SITEMAP.LLMS_TXT_HELP
+          highlight: 1
+          default: 1
+          options:
+            1: PLUGIN_ADMIN.ENABLED
+            0: PLUGIN_ADMIN.DISABLED
+          validate:
+            type: bool
+
+        llms_full_txt:
+          type: toggle
+          label: PLUGIN_SITEMAP.LLMS_FULL_TXT
+          help: PLUGIN_SITEMAP.LLMS_FULL_TXT_HELP
+          highlight: 1
+          default: 0
+          options:
+            1: PLUGIN_ADMIN.ENABLED
+            0: PLUGIN_ADMIN.DISABLED
+          validate:
+            type: bool
 
     ignores:
       type: array

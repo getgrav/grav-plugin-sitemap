@@ -13,6 +13,9 @@ class SitemapEntry
     public $priority;
     public $images;
     public $hreflangs = [];
+    public $description;
+    public $markdown;
+    public $home = false;
 
     public int $timestamp;
     public string $rawroute;

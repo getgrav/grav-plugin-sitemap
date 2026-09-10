@@ -40,6 +40,7 @@ class SitemapPlugin extends Plugin
 
     protected $news_route = null;
     protected $llms_route = null;
+    protected $llms_built = false;
     protected $sitemap_cache_id = null;
 
     /**
@@ -293,12 +294,16 @@ class SitemapPlugin extends Plugin
         $twig = $this->grav['twig'];
         $twig->twig_vars['sitemap'] = $this->sitemap;
 
-        if ($this->llms_route === 'llms') {
-            $twig->twig_vars['llms_sections'] = $this->llmsSections();
-            $twig->template = 'llms.txt.twig';
-        } elseif ($this->llms_route === 'llms-full') {
-            $twig->twig_vars['llms_full'] = $this->llmsFull();
-            $twig->template = 'llms-full.txt.twig';
+        // Once only: building llms-full.txt renders every page through the
+        // theme, and each of those renders fires this event again.
+        if ($this->llms_route && !$this->llms_built) {
+            $this->llms_built = true;
+            if ($this->llms_route === 'llms') {
+                $twig->twig_vars['llms_sections'] = $this->llmsSections();
+            } else {
+                $twig->twig_vars['llms_full'] = $this->llmsFull();
+            }
+            $twig->template = "{$this->llms_route}.txt.twig";
         }
     }
 
@@ -363,10 +368,15 @@ class SitemapPlugin extends Plugin
             return '';
         }
 
+        // A page rendered for a logged-in visitor may carry that visitor's
+        // state, so only the anonymous build goes in (and comes out of) the cache.
+        $user = $this->grav['user'] ?? null;
+        $anonymous = !($user && $user->authenticated && $user->authorized);
+
         /** @var Cache $cache */
         $cache = $this->grav['cache'];
         $cache_id = md5('llms-full-' . $this->sitemap_cache_id . $this->grav['config']->checksum());
-        $cached = $cache->fetch($cache_id);
+        $cached = $anonymous ? $cache->fetch($cache_id) : false;
         if (is_string($cached)) {
             return $cached;
         }
@@ -386,7 +396,9 @@ class SitemapPlugin extends Plugin
         }
 
         $full = implode("\n\n", $documents) . "\n";
-        $cache->save($cache_id, $full);
+        if ($anonymous) {
+            $cache->save($cache_id, $full);
+        }
 
         return $full;
     }

@@ -13,6 +13,8 @@ ignores:
 whitelist:
 xsl_transform: true
 html_support: false
+llms_txt: true
+llms_full_txt: false
 urlset: 'http://www.sitemaps.org/schemas/sitemap/0.9'
 urlnewsset: 'http://www.google.com/schemas/sitemap-news/0.9'
 urlimageset: 'http://www.google.com/schemas/sitemap-image/1.1'

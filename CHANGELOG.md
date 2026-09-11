@@ -1,3 +1,10 @@
+# v5.3.0
+## 09/10/2026
+
+1. [](#new)
+    * The plugin now serves `/llms.txt`, an index of every page in the sitemap as a Markdown link with its description, in the format AI agents look for. Each link points at the page's Markdown version from Grav 2.1's Markdown output, and the same ignore rules as the XML sitemap apply
+    * An optional `/llms-full.txt` joins every page's full Markdown into one document. It is off by default and cached once built
+
 # v5.2.3
 ## 08/31/2026
 

@@ -1,0 +1,17 @@
+{#- llms.txt: the site's pages as Markdown links, for AI agents. See https://llmstxt.org -#}
+{%- autoescape false -%}
+# {{ site.title }}
+{% if site.metadata.description %}
+
+> {{ site.metadata.description|replace({"\n": ' '}) }}
+{% endif %}
+{% for section in llms_sections %}
+
+## {{ section.title }}
+
+{% for entry in section.entries %}
+- [{{ entry.title ?: 'PLUGIN_SITEMAP.UNTITLED'|t }}]({{ entry.markdown }}){% if entry.description %}: {{ entry.description }}{% endif %}
+
+{% endfor %}
+{%- endfor %}
+{%- endautoescape -%}

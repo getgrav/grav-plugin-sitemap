@@ -1,3 +1,9 @@
+# v5.3.1
+## 09/13/2026
+
+1. [](#new)
+    * The plugin is now fully translated into Spanish. Thanks @pmoreno-rodriguez [#122](https://github.com/getgrav/grav-plugin-sitemap/pull/122)
+
 # v5.3.0
 ## 09/10/2026
 

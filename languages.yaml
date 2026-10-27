@@ -63,6 +63,7 @@ en:
     DATE_TYPE: 'Date Type'
     DATE_TYPE_PAGE_DATE: 'Page Date'
     DATE_TYPE_LAST_MODIFIED: 'Last Modified'
+    DATE_TYPE_HELP: 'The date each page lists as last modified: the page file''s modification time, or the date set in the page''s frontmatter (pages without one fall back to the modification time). A sitemap lastmod set on a page always wins.'
     STANDALONE_SITEMAP_NEWS: 'Standalone News URLs'
     STANDALONE_SITEMAP_NEWS_HELP: 'Create a standalone sitemap-news.xml file for each news-enabled path'
     SITEMAP_NEWS_PATH: 'Sitemap News Path'

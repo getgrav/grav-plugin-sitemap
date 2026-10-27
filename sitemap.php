@@ -29,6 +29,7 @@ class SitemapPlugin extends Plugin
     protected $multilang_include_fallbacks = false;
     protected $multilang_enabled = true;
     protected $datetime_format = null;
+    protected $date_type = 'last_modified';
     protected $include_change_freq = true;
     protected $default_change_freq = null;
     protected $include_priority = true;
@@ -163,6 +164,7 @@ class SitemapPlugin extends Plugin
             $this->multilang_include_fallbacks = $this->config->get('system.languages.pages_fallback_only') || !empty($this->config->get('system.languages.content_fallback'));
 
             $this->datetime_format = $this->config->get('plugins.sitemap.short_date_format') ? 'Y-m-d' : 'Y-m-d\TH:i:sP';
+            $this->date_type = $this->config->get('plugins.sitemap.date_type', 'last_modified');
             $this->include_change_freq = $this->config->get('plugins.sitemap.include_changefreq');
             $this->default_change_freq = $this->config->get('plugins.sitemap.changefreq');
             $this->include_priority = $this->config->get('plugins.sitemap.include_priority');
@@ -484,7 +486,17 @@ class SitemapPlugin extends Plugin
                 $include_lang = $this->multilang_skiplang_prefix !== $lang;
                 $location = $page->canonical($include_lang);
                 $url = $page->url(false, $include_lang);
-                $lastmod = !empty($header->sitemap['lastmod']) ? strtotime($header->sitemap['lastmod']) : $page->modified();
+                // A per-page `sitemap.lastmod` always wins. Otherwise `date_type`
+                // picks the page's `date:` header (which core falls back to the
+                // file's modification time when it is missing) or the file's
+                // modification time itself.
+                if (!empty($header->sitemap['lastmod'])) {
+                    $lastmod = strtotime($header->sitemap['lastmod']);
+                } elseif ($this->date_type === 'page_date') {
+                    $lastmod = $page->date();
+                } else {
+                    $lastmod = $page->modified();
+                }
 
                 $lang_route = [
                     'title' => $page->title(),

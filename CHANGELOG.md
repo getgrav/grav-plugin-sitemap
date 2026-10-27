@@ -1,3 +1,9 @@
+# v5.3.2
+## 10/26/2026
+
+1. [](#bugfix)
+    * The Date Type setting now works: Page Date lists each page's frontmatter date as its last modified date in the sitemap [#124](https://github.com/getgrav/grav-plugin-sitemap/issues/124)
+
 # v5.3.1
 ## 09/13/2026
 

@@ -212,7 +212,8 @@ form:
         date_type:
           type: select
           label: PLUGIN_SITEMAP.DATE_TYPE
-          default: page_date
+          help: PLUGIN_SITEMAP.DATE_TYPE_HELP
+          default: last_modified
           size: medium
           options:
               page_date: PLUGIN_SITEMAP.DATE_TYPE_PAGE_DATE

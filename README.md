@@ -52,6 +52,7 @@ html_support: false
 urlset: 'http://www.sitemaps.org/schemas/sitemap/0.9'
 urlnewsset: 'http://www.google.com/schemas/sitemap-news/0.9'
 short_date_format: true
+date_type: last_modified    # last_modified | page_date
 include_changefreq: true
 changefreq: daily
 include_priority: true

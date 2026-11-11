@@ -30,9 +30,9 @@ class SitemapPlugin extends Plugin
     protected $multilang_enabled = true;
     protected $datetime_format = null;
     protected $date_type = 'last_modified';
-    protected $include_change_freq = true;
+    protected $include_change_freq = false;
     protected $default_change_freq = null;
-    protected $include_priority = true;
+    protected $include_priority = false;
     protected $default_priority = null;
     protected $ignores = null;
     protected $ignore_external = true;

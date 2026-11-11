@@ -1,3 +1,9 @@
+# v5.3.3
+## 11/10/2026
+
+1. [](#improved)
+    * Change frequency and priority are now off by default, since Google and Bing ignore them. Sites that want them can turn them back on in the plugin settings [#125](https://github.com/getgrav/grav-plugin-sitemap/issues/125)
+
 # v5.3.2
 ## 10/26/2026
 

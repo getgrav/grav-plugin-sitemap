@@ -20,9 +20,9 @@ urlnewsset: 'http://www.google.com/schemas/sitemap-news/0.9'
 urlimageset: 'http://www.google.com/schemas/sitemap-image/1.1'
 short_date_format: true
 date_type: last_modified
-include_changefreq: true
+include_changefreq: false
 changefreq: daily
-include_priority: true
+include_priority: false
 priority: !!float 1
 additions: []
 multilang_enabled: true

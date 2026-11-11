@@ -93,8 +93,8 @@ form:
       type: toggle
       label: PLUGIN_SITEMAP.XSL_TRANSFORM
       help: PLUGIN_SITEMAP.XSL_TRANSFORM_HELP
-      highlight: 1
-      default: 1
+      highlight: 0
+      default: 0
       options:
         1: PLUGIN_ADMIN.ENABLED
         0: PLUGIN_ADMIN.DISABLED

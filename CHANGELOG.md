@@ -1,3 +1,10 @@
+# v5.3.4
+## 11/10/2026
+
+1. [](#improved)
+    * The HTML sitemap at `/sitemap.html` has a new look: a heading with the page count and a link to the XML version, each page listed with its address underneath, child pages indented under their parents, and a layout that follows the theme's colors in light and dark mode and fits on phones
+    * The XSL stylesheet for the XML sitemap is now off by default, because browsers are dropping XSLT support and Chrome already shows a warning on sitemaps that use it. Search engines never used it, and `/sitemap.html` is the readable version for people
+
 # v5.3.3
 ## 11/10/2026
 

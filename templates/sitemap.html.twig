@@ -3,29 +3,62 @@
 {% block content %}
   {% set language = grav.language %}
   {% set lang = language.enabled ? (language.active ?: language.default) : null %}
-  {% set count = 1 %}
+  {% set root = grav.uri.rootUrl(true) %}
+  {% set entries = sitemap|filter(entry => lang is null or entry.lang == lang) %}
+  {% set route = config.plugins.sitemap.route %}
 
-  <table class="sitemap">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>{{ 'PLUGIN_SITEMAP.TITLE_TITLE'|t }}</th>
-        <th>{{ 'PLUGIN_SITEMAP.TITLE_LOCATION'|t }}</th>
-        <th>{{ 'PLUGIN_SITEMAP.TITLE_LASTMOD'|t }}</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for entry in sitemap %}
-      {% if lang is null or entry.lang == lang %}
+  <style>
+    .grav-sitemap { --gs-line: color-mix(in srgb, currentColor 12%, transparent); --gs-muted: color-mix(in srgb, currentColor 60%, transparent); max-width: 60rem; margin: 0 auto; padding: 2.5rem 1rem 4rem; box-sizing: border-box; }
+    .grav-sitemap * { box-sizing: border-box; }
+    .grav-sitemap__header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem; padding-bottom: 1rem; margin-bottom: .5rem; border-bottom: 2px solid var(--gs-line); }
+    .grav-sitemap__header h1 { margin: 0; font-size: 2rem; line-height: 1.2; }
+    .grav-sitemap__meta { margin: 0; font-size: .875rem; color: var(--gs-muted); }
+    .grav-sitemap__meta a { color: inherit; }
+    .grav-sitemap table { width: 100%; margin: 0; border-collapse: collapse; border: 0; background: none; font-size: 1rem; }
+    .grav-sitemap th, .grav-sitemap td { padding: .75rem .5rem; border: 0; border-bottom: 1px solid var(--gs-line); background: none; text-align: start; vertical-align: top; }
+    .grav-sitemap thead th { padding-block: .5rem; font-size: .75rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--gs-muted); }
+    .grav-sitemap tbody tr:hover { background: color-mix(in srgb, currentColor 4%, transparent); }
+    .grav-sitemap__page { padding-inline-start: calc(.5rem + var(--depth, 0) * 1.25rem) !important; }
+    .grav-sitemap__title { font-weight: 600; text-decoration: none; }
+    .grav-sitemap__title:hover { text-decoration: underline; }
+    .grav-sitemap__url { display: block; margin-top: .125rem; font-size: .8125rem; color: var(--gs-muted); overflow-wrap: anywhere; }
+    .grav-sitemap__date { width: 1%; white-space: nowrap; font-size: .875rem; font-variant-numeric: tabular-nums; color: var(--gs-muted); text-align: end !important; }
+    @media (max-width: 40rem) {
+      .grav-sitemap__page { padding-inline-start: calc(.5rem + min(var(--depth, 0), 2) * .75rem) !important; }
+      .grav-sitemap__date { font-size: .75rem; }
+    }
+  </style>
+
+  <section class="grav-sitemap">
+    <header class="grav-sitemap__header">
+      <h1>{{ page.title }}</h1>
+      <p class="grav-sitemap__meta">
+        {{ 'PLUGIN_SITEMAP.PAGE_COUNT'|t(entries|length) }}
+        &middot; <a href="{{ url(route ~ '.xml') }}">{{ 'PLUGIN_SITEMAP.XML_VERSION'|t }}</a>
+      </p>
+    </header>
+
+    <table>
+      <thead>
         <tr>
-          <td>{{ count }}</td>
-          <td><a href="{{ entry.location }}">{{ entry.title ?: 'PLUGIN_SITEMAP.UNTITLED'|t }}</a></td>
-          <td><a href="{{ entry.location }}">{{ entry.location }}</a></td>
-          <td>{{ entry.lastmod }}</td>
+          <th scope="col">{{ 'PLUGIN_SITEMAP.TITLE_TITLE'|t }}</th>
+          <th scope="col" class="grav-sitemap__date">{{ 'PLUGIN_SITEMAP.TITLE_LASTMOD'|t }}</th>
         </tr>
-        {% set count = count + 1 %}
-      {% endif %}
-    {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+      {% for entry in entries %}
+        {% set path = entry.location starts with root ? entry.location|slice(root|length)|trim('/') : '' %}
+        {% if lang and (path == lang or path starts with lang ~ '/') %}{% set path = path|slice(lang|length)|trim('/') %}{% endif %}
+        {% set depth = path ? min(path|split('/')|length - 1, 4) : 0 %}
+        <tr>
+          <td class="grav-sitemap__page" style="--depth: {{ depth }}">
+            <a class="grav-sitemap__title" href="{{ entry.location }}">{{ entry.title ?: 'PLUGIN_SITEMAP.UNTITLED'|t }}</a>
+            <span class="grav-sitemap__url">{{ entry.location }}</span>
+          </td>
+          <td class="grav-sitemap__date">{% if entry.lastmod %}<time datetime="{{ entry.lastmod }}">{{ entry.lastmod|date('Y-m-d') }}</time>{% endif %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
 {% endblock %}

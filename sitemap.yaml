@@ -11,7 +11,7 @@ news_enabled_paths:
   - /blog
 ignores:
 whitelist:
-xsl_transform: true
+xsl_transform: false
 html_support: false
 llms_txt: true
 llms_full_txt: false
